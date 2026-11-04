@@ -1,57 +1,62 @@
-# Deutsch Bangla — Offline German Learning App
+# Deutsch Bangla 🇧🇩🇩🇪
 
-An offline-first Flutter starter app for Bengali speakers learning German from CEFR A1 to B2.
+An offline-first Flutter learning app for Bengali speakers studying German from CEFR A1 to B2.
 
-## Features
-- Bengali-first mobile interface
-- A1, A2, B1 and B2 vocabulary with articles, plural forms, Bengali pronunciation, meanings and examples
-- Grammar/lesson cards with simple Bengali explanations
-- Level-filtered vocabulary and short interactive quizzes
-- SQLite local database; starter content is seeded on first launch
-- Clean separation between models, data/database, repository and presentation
+## Project status
 
-## Requirements
-- Flutter stable (Dart SDK >=3.3)
-- Android Studio/Android SDK for Android builds
+This repository is being improved incrementally. The current starter includes a Bengali home screen, searchable and level-filtered vocabulary, grammar lesson cards, multiple-choice quizzes, and SQLite-seeded learning content.
 
-## Setup
-1. Install Flutter and verify with `flutter doctor`.
-2. Clone this repository.
-3. From the repository root run:
-   ```bash
-   flutter pub get
-   flutter create . --platforms=android
-   flutter run
-   ```
-   The `flutter create` step generates the Android platform wrapper if it is not present in the repository.
-4. Build an APK with `flutter build apk --release`.
+Recent foundation work:
+- SQLite schema v2 with a safe v1-to-v2 upgrade path.
+- Local tables for vocabulary/lesson favorites, learning progress, daily activity, and app settings.
+- Repository operations for favorites, progress summaries, settings, and resetting progress.
+- A domain-level repository contract separating the learning API from SQLite implementation.
 
-## Project structure
+**Not yet complete:** the requested 400–600 reviewed vocabulary entries, 25–35 complete lessons, 80–120 quiz questions, complete progress/streak/daily-goal UI, SRS review interface, onboarding, settings screens, theme switching, audio, release assets and full Android release verification. Do not treat this as a finished or certified A1–B2 course yet.
+
+## Stack
+- Flutter / Dart (SDK >=3.3.0 <4.0.0)
+- Material 3
+- SQLite (sqflite)
+- Provider
+
+## Run locally
+```bash
+flutter pub get
+flutter create . --platforms=android # only if Android platform files are absent
+flutter run
+```
+
+Build a release APK:
+```bash
+flutter build apk --release
+```
+
+Quality checks:
+```bash
+dart format .
+flutter analyze
+flutter test
+```
+
+## Architecture
 ```
 lib/
-  main.dart
-  app.dart
-  data/
-    app_database.dart
-    seed_data.dart
-  models/
-    vocabulary_word.dart
-    lesson.dart
-    quiz_question.dart
-  repositories/
-    learning_repository.dart
-  screens/
-    home_screen.dart
-    vocabulary_screen.dart
-    lessons_screen.dart
-    quiz_screen.dart
+  data/           # SQLite database, schema migrations and bundled seed data
+  domain/         # Repository contracts and learning rules
+  models/         # Typed learning entities
+  repositories/   # SQLite-backed repository implementation
+  screens/        # Flutter presentation screens
 ```
 
-## Offline data
-All learning content is stored locally in SQLite. No account or network connection is required. The first run inserts the bundled starter dataset. To expand the curriculum, add reviewed entries to `lib/data/seed_data.dart` and increment the database version/migration when changing the schema.
+## Database
+SQLite database version 2 creates content tables (vocabulary, lessons, quizzes), item-level learning progress, daily activity, and local app settings. Existing v1 installs are upgraded by adding favorite columns and creating new user-data tables; existing learning content is retained.
 
-## Content and learning note
-This repository provides a useful starter curriculum, not a complete certified A1–B2 course. The included words and grammar notes should be reviewed by a qualified German instructor before publication as a full course. IPA/pronunciation hints are learner aids, not a substitute for audio and listening practice.
+## Adding content
+Add reviewed entries to lib/data/seed_data.dart. A seed-file edit alone does not update databases that have already been created. Use a content-version migration or deliberate bundled-content refresh strategy when shipping additional words, lessons, or quizzes. Verify German spelling, noun gender, plural, Bengali meaning and both example translations before merging.
+
+## Educational disclaimer
+This is an independent learning aid, not an official Goethe-Institut product or a CEFR certificate. Bengali phonetic spellings are approximate pronunciation hints, not a replacement for listening practice. Have course content reviewed by a qualified German instructor before presenting it as a complete curriculum.
 
 ## License
-Choose and add a license before distributing the app publicly.
+MIT. See LICENSE.
