@@ -29,6 +29,12 @@ class LearningRepository implements LearningRepositoryContract {
     final rows = await db.query('quizzes', where: level == 'All' ? null : 'level = ?', whereArgs: level == 'All' ? null : [level]);
     return rows.map((r) => QuizQuestion(id: r['id'] as int, level: r['level'] as String, question: r['question'] as String, options: (r['options'] as String).split('|'), answer: r['answer'] as String, explanation: r['explanation'] as String)).toList();
   }
+  Future<List<VocabularyWord>> getDueWords() async {
+    final db = await _source.database;
+    final now = DateTime.now().toIso8601String();
+    final rows = await db.rawQuery('SELECT v.* FROM vocabulary v LEFT JOIN learning_progress p ON p.item_type = ? AND p.item_id = v.id WHERE p.id IS NULL OR p.due_at IS NULL OR p.due_at <= ? ORDER BY COALESCE(p.due_at, ?), v.level LIMIT 50', ['word', now, now]);
+    return rows.map(VocabularyWord.fromMap).toList();
+  }
   Future<void> setFavorite({required String itemType, required int itemId, required bool favorite}) async {
     if (!['word', 'lesson'].contains(itemType)) throw ArgumentError.value(itemType, 'itemType');
     final db = await _source.database;
