@@ -1,5 +1,6 @@
 class QuizQuestion {
-  const QuizQuestion({required this.question, required this.options, required this.answer, required this.explanation, required this.level});
+  const QuizQuestion({required this.id, required this.question, required this.options, required this.answer, required this.explanation, required this.level});
+  final int id;
   final String question, answer, explanation, level;
   final List<String> options;
 }
