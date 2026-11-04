@@ -25,10 +25,11 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('অনুশীলন পরীক্ষা')),
     body: FutureBuilder<List<QuizQuestion>>(future: questions, builder: (context, snapshot) {
+      if (snapshot.hasError) return const Center(child: Text('প্রশ্ন লোড করা যায়নি। আবার চেষ্টা করুন।'));
       if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
       final list = snapshot.data!;
       return Column(children: [
-        Padding(padding: const EdgeInsets.all(12), child: Wrap(spacing: 8, children: ['All','A1','A2','B1','B2'].map((v) => ChoiceChip(label: Text(v), selected: level == v, onSelected: (_) => _changeLevel(v))).toList())),
+        Padding(padding: const EdgeInsets.all(12), child: Wrap(spacing: 8, children: ['All','A1','A2','B1','B2'].map((v) => ChoiceChip(label: Text(v == 'All' ? 'সব' : v), selected: level == v, onSelected: (_) => _changeLevel(v))).toList())),
         if (list.isEmpty) const Expanded(child: Center(child: Text('এই স্তরে প্রশ্ন নেই.')))
         else if (finished) Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.emoji_events, size: 64, color: Color(0xFF176B5B)),
