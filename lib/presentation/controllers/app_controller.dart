@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../repositories/learning_repository.dart';
+import '../../repositories/learning_repository.dart';
 
 class AppController extends ChangeNotifier {
   AppController(this.repository);
