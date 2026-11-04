@@ -43,7 +43,7 @@ class _QuizScreenState extends State<QuizScreen> {
           Text(list[index].question, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           ...list[index].options.map((option) => Padding(padding: const EdgeInsets.only(bottom: 10), child: OutlinedButton(
-            style: OutlinedButton.styleFrom(backgroundColor: selected == option ? const Color(0xFFE5F2EE) : Colors.white, padding: const EdgeInsets.all(14), alignment: Alignment.centerLeft),
+            style: OutlinedButton.styleFrom(backgroundColor: selected == option ? Theme.of(context).colorScheme.secondaryContainer : Theme.of(context).colorScheme.surface, padding: const EdgeInsets.all(14), alignment: Alignment.centerLeft),
             onPressed: selected == null ? () => setState(() { selected = option; final correct = option == list[index].answer; if (correct) score++; context.read<LearningRepositoryProvider>().repository.recordProgress(itemType: 'quiz', itemId: list[index].id, correct: correct); }) : null,
             child: Text(option),
           ))),
