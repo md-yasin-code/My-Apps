@@ -5,6 +5,7 @@ import 'quiz_screen.dart';
 import 'progress_screen.dart';
 import 'settings_screen.dart';
 import 'review_screen.dart';
+import 'favorites_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
       _HomeTile(Icons.quiz_rounded, 'অনুশীলন পরীক্ষা', 'শব্দভান্ডার ও ব্যাকরণ যাচাই করুন', const QuizScreen()),
       _HomeTile(Icons.replay_circle_filled, 'শব্দ পুনরাবৃত্তি', 'মনে রাখার জন্য ফ্ল্যাশকার্ড অনুশীলন', const ReviewScreen()),
       _HomeTile(Icons.insights_rounded, 'আমার অগ্রগতি', 'আপনার শেখার পরিসংখ্যান দেখুন', const ProgressScreen()),
+      _HomeTile(Icons.favorite, 'পছন্দের তালিকা', 'সংরক্ষিত শব্দ ও লেসন', const FavoritesScreen()),
       _HomeTile(Icons.settings_rounded, 'সেটিংস', 'থিম, দৈনিক লক্ষ্য ও ডেটা ব্যবস্থাপনা', const SettingsScreen()),
     ];
     return Scaffold(appBar: AppBar(title: const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800))), body: ListView(padding: const EdgeInsets.all(20), children: [
