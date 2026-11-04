@@ -2,13 +2,15 @@ import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'seed_data.dart';
 import 'extended_vocabulary.dart';
+import 'extended_lessons.dart';
+import 'vocabulary_quiz_seed.dart';
 
 class AppDatabase {
   Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
     final path = p.join(await getDatabasesPath(), 'deutsch_bangla.db');
-    _database = await openDatabase(path, version: 3,
+    _database = await openDatabase(path, version: 4,
       onCreate: (db, version) async {
         await _createLearningTables(db);
         await _createUserTables(db);
@@ -16,7 +18,9 @@ class AppDatabase {
         for (final row in vocabularySeed) { batch.insert('vocabulary', row); }
         for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row); }
         for (final row in lessonSeed) { batch.insert('lessons', row); }
+        for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
         for (final row in quizSeed) { batch.insert('quizzes', row); }
+        for (final row in buildVocabularyQuizSeed()) { batch.insert('quizzes', row); }
         await batch.commit(noResult: true);
         await db.execute("UPDATE vocabulary SET word_type = CASE WHEN article IN ('verb','adverb','adjective','conjunction') THEN article ELSE COALESCE(word_type, 'noun') END");
       },
@@ -31,6 +35,12 @@ class AppDatabase {
           await db.execute("UPDATE vocabulary SET word_type = CASE WHEN article IN ('verb','adverb','adjective','conjunction') THEN article ELSE 'noun' END");
           final batch = db.batch();
           for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
+          await batch.commit(noResult: true);
+        }
+        if (oldVersion < 4) {
+          final batch = db.batch();
+          for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
+          for (final row in buildVocabularyQuizSeed()) { batch.insert('quizzes', row); }
           await batch.commit(noResult: true);
         }
       });
