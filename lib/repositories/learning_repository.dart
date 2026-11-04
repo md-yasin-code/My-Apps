@@ -26,7 +26,7 @@ class LearningRepository implements LearningRepositoryContract {
   Future<List<QuizQuestion>> getQuiz({String level = 'All'}) async {
     final db = await _source.database;
     final rows = await db.query('quizzes', where: level == 'All' ? null : 'level = ?', whereArgs: level == 'All' ? null : [level]);
-    return rows.map((r) => QuizQuestion(level: r['level'] as String, question: r['question'] as String, options: (r['options'] as String).split('|'), answer: r['answer'] as String, explanation: r['explanation'] as String)).toList();
+    return rows.map((r) => QuizQuestion(id: r['id'] as int, level: r['level'] as String, question: r['question'] as String, options: (r['options'] as String).split('|'), answer: r['answer'] as String, explanation: r['explanation'] as String)).toList();
   }
   Future<void> setFavorite({required String itemType, required int itemId, required bool favorite}) async {
     if (!['word', 'lesson'].contains(itemType)) throw ArgumentError.value(itemType, 'itemType');
