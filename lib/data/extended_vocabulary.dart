@@ -106,7 +106,14 @@ const extendedVocabularyLines = <String>[
   "|währenddessen|adverb|—|ভেয়ারেন্টডেসেন|এদিকে / সেই সময়ে|Er kocht; währenddessen decke ich den Tisch.|সে রান্না করছে; এদিকে আমি টেবিল সাজাচ্ছি।|adverb",
 ];
 
-List<Map<String, Object?>> buildExtendedVocabulary() => extendedVocabularyLines.map((line) {
-  final p = line.substring(1).split('|');
-  return <String, Object?>{'level':p[0], 'german':p[1], 'article':p[2], 'plural':p[3], 'pronunciation':p[4], 'meaning_bn':p[5], 'example_de':p[6], 'example_bn':p[7], 'word_type':p[8]};
-}).toList(growable: false);
+List<Map<String, Object?>> buildExtendedVocabulary() {
+  var currentLevel = 'A1';
+  final result = <Map<String, Object?>>[];
+  for (final line in extendedVocabularyLines) {
+    final parts = line.substring(1).split('|');
+    if (parts.length == 1) { currentLevel = parts.first; continue; }
+    if (parts.length != 8) continue;
+    result.add(<String, Object?>{'level': currentLevel, 'german': parts[0], 'article': parts[1], 'plural': parts[2], 'pronunciation': parts[3], 'meaning_bn': parts[4], 'example_de': parts[5], 'example_bn': parts[6], 'word_type': parts[7]});
+  }
+  return result;
+}
