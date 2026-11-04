@@ -26,6 +26,13 @@ class AppDatabase {
           await db.execute('ALTER TABLE lessons ADD COLUMN is_favorite INTEGER NOT NULL DEFAULT 0');
           await _createUserTables(db);
         }
+        if (oldVersion < 3) {
+          await db.execute("ALTER TABLE vocabulary ADD COLUMN word_type TEXT NOT NULL DEFAULT 'noun'");
+          await db.execute("UPDATE vocabulary SET word_type = CASE WHEN article IN ('verb','adverb','adjective','conjunction') THEN article ELSE 'noun' END");
+          final batch = db.batch();
+          for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
+          await batch.commit(noResult: true);
+        }
       });
     return _database!;
   }
