@@ -3,8 +3,9 @@ import '../data/app_database.dart';
 import '../models/vocabulary_word.dart';
 import '../models/lesson.dart';
 import '../models/quiz_question.dart';
+import '../domain/repositories/learning_repository_contract.dart';
 
-class LearningRepository {
+class LearningRepository implements LearningRepositoryContract {
   LearningRepository(this._source);
   final AppDatabase _source;
   Future<void> initialize() async { await _source.database; }
