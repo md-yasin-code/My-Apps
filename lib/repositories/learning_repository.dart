@@ -10,11 +10,12 @@ class LearningRepository implements LearningRepositoryContract {
   final AppDatabase _source;
   Future<void> initialize() async { await _source.database; }
 
-  Future<List<VocabularyWord>> getWords({String level = 'All', String query = ''}) async {
+  Future<List<VocabularyWord>> getWords({String level = 'All', String query = '', String wordType = 'All'}) async {
     final db = await _source.database;
     final where = <String>[]; final args = <Object?>[];
     if (level != 'All') { where.add('level = ?'); args.add(level); }
     if (query.trim().isNotEmpty) { where.add('(german LIKE ? OR meaning_bn LIKE ?)'); args..add('%${query.trim()}%')..add('%${query.trim()}%'); }
+    if (wordType != 'All') { where.add('word_type = ?'); args.add(wordType); }
     final rows = await db.query('vocabulary', where: where.isEmpty ? null : where.join(' AND '), whereArgs: args, orderBy: 'level, german');
     return rows.map(VocabularyWord.fromMap).toList();
   }
