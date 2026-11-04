@@ -1,6 +1,7 @@
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'seed_data.dart';
+import 'extended_vocabulary.dart';
 
 class AppDatabase {
   Database? _database;
@@ -13,9 +14,11 @@ class AppDatabase {
         await _createUserTables(db);
         final batch = db.batch();
         for (final row in vocabularySeed) { batch.insert('vocabulary', row); }
+        for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row); }
         for (final row in lessonSeed) { batch.insert('lessons', row); }
         for (final row in quizSeed) { batch.insert('quizzes', row); }
         await batch.commit(noResult: true);
+        await db.execute("UPDATE vocabulary SET word_type = CASE WHEN article IN ('verb','adverb','adjective','conjunction') THEN article ELSE COALESCE(word_type, 'noun') END");
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
