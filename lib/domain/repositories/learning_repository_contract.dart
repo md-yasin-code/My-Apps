@@ -3,7 +3,7 @@ import '../../models/lesson.dart';
 import '../../models/quiz_question.dart';
 
 abstract interface class LearningRepositoryContract {
-  Future<List<VocabularyWord>> getWords({String level = 'All', String query = ''});
+  Future<List<VocabularyWord>> getWords({String level = 'All', String query = '', String wordType = 'All'});
   Future<List<Lesson>> getLessons({String level = 'All'});
   Future<List<QuizQuestion>> getQuiz({String level = 'All'});
   Future<void> setFavorite({required String itemType, required int itemId, required bool favorite});
