@@ -60,8 +60,16 @@ class LearningRepository implements LearningRepositoryContract {
     final words = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress WHERE item_type='word' AND status='learning'")) ?? 0;
     final lessons = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress WHERE item_type='lesson'")) ?? 0;
     final totals = (await db.rawQuery('SELECT COALESCE(SUM(quiz_correct),0) AS correct, COALESCE(SUM(quiz_total),0) AS total FROM daily_activity')).first;
-    final days = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM daily_activity WHERE words_reviewed > 0 OR quiz_total > 0')) ?? 0;
-    return {'words_learned': words, 'lessons_touched': lessons, 'quiz_correct': totals['correct'], 'quiz_total': totals['total'], 'active_days': days};
+    final activeRows = await db.query('daily_activity', columns: ['activity_date'], where: 'words_reviewed > 0 OR quiz_total > 0', orderBy: 'activity_date DESC');
+    final activeDates = activeRows.map((row) => row['activity_date'] as String).toSet();
+    final today = DateTime.now();
+    final todayKey = today.toIso8601String().substring(0, 10);
+    final todayWords = Sqflite.firstIntValue(await db.rawQuery('SELECT COALESCE(words_reviewed,0) FROM daily_activity WHERE activity_date = ?', [todayKey])) ?? 0;
+    var cursor = DateTime(today.year, today.month, today.day);
+    if (!activeDates.contains(todayKey)) cursor = cursor.subtract(const Duration(days: 1));
+    var streak = 0;
+    while (activeDates.contains(cursor.toIso8601String().substring(0, 10))) { streak++; cursor = cursor.subtract(const Duration(days: 1)); }
+    return {'words_learned': words, 'lessons_touched': lessons, 'quiz_correct': totals['correct'], 'quiz_total': totals['total'], 'active_days': activeDates.length, 'current_streak': streak, 'today_words': todayWords};
   }
   Future<void> saveSetting(String key, String value) async { final db = await _source.database; await db.insert('app_settings', {'setting_key': key, 'setting_value': value}, conflictAlgorithm: ConflictAlgorithm.replace); }
   Future<String?> readSetting(String key) async { final db = await _source.database; final rows = await db.query('app_settings', columns: ['setting_value'], where: 'setting_key = ?', whereArgs: [key], limit: 1); return rows.isEmpty ? null : rows.first['setting_value'] as String; }
