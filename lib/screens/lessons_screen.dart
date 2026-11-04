@@ -27,6 +27,8 @@ class _LessonsScreenState extends State<LessonsScreen> {
         return ListView.builder(padding: const EdgeInsets.all(14), itemCount: snapshot.data!.length, itemBuilder: (_, i) {
           final l = snapshot.data![i];
           return Card(child: ExpansionTile(
+            onExpansionChanged: (open) { if (open) context.read<LearningRepositoryProvider>().repository.recordProgress(itemType: 'lesson', itemId: l.id, correct: true); },
+            trailing: Row(mainAxisSize: MainAxisSize.min, children: [IconButton(tooltip: l.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(l.isFavorite ? Icons.favorite : Icons.favorite_border), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'lesson', itemId: l.id, favorite: !l.isFavorite); setState(() => lessons = _load()); }), const Icon(Icons.expand_more)]),
             title: Text(l.title, style: const TextStyle(fontWeight: FontWeight.bold)),
             leading: CircleAvatar(child: Text(l.level)),
             childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
