@@ -7,7 +7,7 @@ class AppDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
     final path = p.join(await getDatabasesPath(), 'deutsch_bangla.db');
-    _database = await openDatabase(path, version: 2,
+    _database = await openDatabase(path, version: 3,
       onCreate: (db, version) async {
         await _createLearningTables(db);
         await _createUserTables(db);
@@ -27,7 +27,7 @@ class AppDatabase {
     return _database!;
   }
   Future<void> _createLearningTables(DatabaseExecutor db) async {
-    await db.execute('''CREATE TABLE vocabulary (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, german TEXT NOT NULL, article TEXT NOT NULL, plural TEXT NOT NULL, pronunciation TEXT NOT NULL, meaning_bn TEXT NOT NULL, example_de TEXT NOT NULL, example_bn TEXT NOT NULL, is_favorite INTEGER NOT NULL DEFAULT 0)''');
+    await db.execute('''CREATE TABLE vocabulary (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, german TEXT NOT NULL, article TEXT NOT NULL, plural TEXT NOT NULL, pronunciation TEXT NOT NULL, word_type TEXT NOT NULL DEFAULT 'noun', meaning_bn TEXT NOT NULL, example_de TEXT NOT NULL, example_bn TEXT NOT NULL, is_favorite INTEGER NOT NULL DEFAULT 0)''');
     await db.execute('''CREATE TABLE lessons (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, title TEXT NOT NULL, summary TEXT NOT NULL, rule TEXT NOT NULL, example TEXT NOT NULL, is_favorite INTEGER NOT NULL DEFAULT 0)''');
     await db.execute('''CREATE TABLE quizzes (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, question TEXT NOT NULL, options TEXT NOT NULL, answer TEXT NOT NULL, explanation TEXT NOT NULL)''');
   }
