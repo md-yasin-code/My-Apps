@@ -5,61 +5,47 @@ import '../models/vocabulary_word.dart';
 
 class VocabularyScreen extends StatefulWidget {
   const VocabularyScreen({super.key});
-  @override
-  State<VocabularyScreen> createState() => _VocabularyScreenState();
+  @override State<VocabularyScreen> createState() => _VocabularyScreenState();
 }
-
 class _VocabularyScreenState extends State<VocabularyScreen> {
-  String level = 'All';
-  String query = '';
+  String level = 'All', query = '', wordType = 'All';
   late Future<List<VocabularyWord>> words;
-
-  @override
-  void initState() {
-    super.initState();
-    words = _load();
-  }
-
-  Future<List<VocabularyWord>> _load() => context.read<LearningRepositoryProvider>().repository.getWords(level: level, query: query);
+  @override void initState() { super.initState(); words = _load(); }
+  Future<List<VocabularyWord>> _load() => context.read<LearningRepositoryProvider>().repository.getWords(level: level, query: query, wordType: wordType);
   void _refresh() => setState(() => words = _load());
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
+  @override Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('শব্দভান্ডার')),
     body: Column(children: [
-      Padding(padding: const EdgeInsets.fromLTRB(16, 8, 16, 8), child: TextField(
+      Padding(padding: const EdgeInsets.fromLTRB(16, 8, 16, 6), child: TextField(
         decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'জার্মান বা বাংলা শব্দ খুঁজুন', filled: true, border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(14)), borderSide: BorderSide.none)),
         onChanged: (v) { query = v; _refresh(); },
       )),
-      SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: ['All','A1','A2','B1','B2'].map((v) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: ChoiceChip(label: Text(v), selected: level == v, onSelected: (_) { level = v; _refresh(); }),
-      )).toList())),
-      Expanded(child: FutureBuilder<List<VocabularyWord>>(
-        future: words,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-          final data = snapshot.data!;
-          if (data.isEmpty) return const Center(child: Text('কোনো শব্দ পাওয়া যায়নি।'));
-          return ListView.builder(padding: const EdgeInsets.all(14), itemCount: data.length, itemBuilder: (_, i) => _WordCard(word: data[i]));
-        },
-      )),
+      _filters(['All','A1','A2','B1','B2'], level, (v) { level = v; _refresh(); }),
+      _filters(['All','noun','verb','adjective','adverb','conjunction'], wordType, (v) { wordType = v; _refresh(); }),
+      Expanded(child: FutureBuilder<List<VocabularyWord>>(future: words, builder: (context, snapshot) {
+        if (snapshot.hasError) return const Center(child: Text('শব্দ লোড করা যায়নি। আবার চেষ্টা করুন।'));
+        if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+        final data = snapshot.data!;
+        if (data.isEmpty) return const Center(child: Text('কোনো শব্দ পাওয়া যায়নি।'));
+        return ListView.builder(padding: const EdgeInsets.all(14), itemCount: data.length, itemBuilder: (_, i) => _WordCard(word: data[i], onChanged: _refresh));
+      })),
     ]),
   );
+  Widget _filters(List<String> values, String selected, ValueChanged<String> onSelect) => SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: values.map((v) => Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: ChoiceChip(label: Text(v == 'All' ? 'সব' : v), selected: selected == v, onSelected: (_) => onSelect(v)))).toList()));
 }
 
 class _WordCard extends StatelessWidget {
-  const _WordCard({required this.word});
-  final VocabularyWord word;
-  @override
-  Widget build(BuildContext context) => Card(
+  const _WordCard({required this.word, required this.onChanged});
+  final VocabularyWord word; final VoidCallback onChanged;
+  @override Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.only(bottom: 10),
     child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Expanded(child: Text('${word.article == 'verb' || word.article == 'adverb' || word.article == 'adjective' || word.article == 'conjunction' ? '' : '${word.article} '}${word.german}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        Expanded(child: Text('${word.article == 'noun' || word.wordType == 'noun' ? '${word.article} ' : ''}${word.german}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         Chip(label: Text(word.level)),
+        IconButton(tooltip: word.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(word.isFavorite ? Icons.favorite : Icons.favorite_border, color: word.isFavorite ? Colors.red : null), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'word', itemId: word.id, favorite: !word.isFavorite); onChanged(); }),
       ]),
-      Text('উচ্চারণ: ${word.pronunciation}  •  ${word.meaningBn}', style: const TextStyle(color: Color(0xFF176B5B), fontWeight: FontWeight.w600)),
+      Text('${word.wordType} • উচ্চারণ: ${word.pronunciation} • ${word.meaningBn}', style: const TextStyle(color: Color(0xFF176B5B), fontWeight: FontWeight.w600)),
       if (word.plural != '—') Text('Plural: ${word.plural}', style: const TextStyle(color: Colors.black54)),
       const Divider(height: 20),
       Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w600)),
