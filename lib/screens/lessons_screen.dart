@@ -38,7 +38,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
               const SizedBox(height: 10),
               Align(alignment: Alignment.centerLeft, child: Text(l.rule, style: const TextStyle(height: 1.5))),
               const SizedBox(height: 10),
-              Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: const Color(0xFFEAF4F0), borderRadius: BorderRadius.circular(12)), child: Text(l.example, style: const TextStyle(fontWeight: FontWeight.w600))),
+              Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: BorderRadius.circular(12)), child: Text(l.example, style: const TextStyle(fontWeight: FontWeight.w600))),
             ],
           ));
         });
