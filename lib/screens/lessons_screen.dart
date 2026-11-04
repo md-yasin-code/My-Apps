@@ -21,8 +21,9 @@ class _LessonsScreenState extends State<LessonsScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('গ্রামার ও লেসন')),
     body: Column(children: [
-      Padding(padding: const EdgeInsets.all(12), child: Wrap(spacing: 8, children: ['All','A1','A2','B1','B2'].map((v) => ChoiceChip(label: Text(v), selected: level == v, onSelected: (_) => _filter(v))).toList())),
+      Padding(padding: const EdgeInsets.all(12), child: Wrap(spacing: 8, children: ['All','A1','A2','B1','B2'].map((v) => ChoiceChip(label: Text(v == 'All' ? 'সব' : v), selected: level == v, onSelected: (_) => _filter(v))).toList())),
       Expanded(child: FutureBuilder<List<Lesson>>(future: lessons, builder: (context, snapshot) {
+        if (snapshot.hasError) return const Center(child: Text('লেসন লোড করা যায়নি। আবার চেষ্টা করুন।'));
         if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
         return ListView.builder(padding: const EdgeInsets.all(14), itemCount: snapshot.data!.length, itemBuilder: (_, i) {
           final l = snapshot.data![i];
