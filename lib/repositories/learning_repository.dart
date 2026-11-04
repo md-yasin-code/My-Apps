@@ -69,7 +69,14 @@ class LearningRepository implements LearningRepositoryContract {
     if (!activeDates.contains(todayKey)) cursor = cursor.subtract(const Duration(days: 1));
     var streak = 0;
     while (activeDates.contains(cursor.toIso8601String().substring(0, 10))) { streak++; cursor = cursor.subtract(const Duration(days: 1)); }
-    return {'words_learned': words, 'lessons_touched': lessons, 'quiz_correct': totals['correct'], 'quiz_total': totals['total'], 'active_days': activeDates.length, 'current_streak': streak, 'today_words': todayWords};
+    final levelProgress = <Map<String, Object?>>[];
+    for (final level in ['A1', 'A2', 'B1', 'B2']) {
+      final levelWords = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress p JOIN vocabulary v ON v.id = p.item_id WHERE p.item_type='word' AND p.status='learning' AND v.level = ?", [level])) ?? 0;
+      final levelLessons = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress p JOIN lessons l ON l.id = p.item_id WHERE p.item_type='lesson' AND l.level = ?", [level])) ?? 0;
+      final levelQuiz = (await db.rawQuery("SELECT COALESCE(SUM(p.correct_count),0) AS correct, COALESCE(SUM(p.correct_count + p.wrong_count),0) AS total FROM learning_progress p JOIN quizzes q ON q.id = p.item_id WHERE p.item_type='quiz' AND q.level = ?", [level])).first;
+      levelProgress.add({'level': level, 'words': levelWords, 'lessons': levelLessons, 'quiz_correct': levelQuiz['correct'], 'quiz_total': levelQuiz['total']});
+    }
+    return {'words_learned': words, 'lessons_touched': lessons, 'quiz_correct': totals['correct'], 'quiz_total': totals['total'], 'active_days': activeDates.length, 'current_streak': streak, 'today_words': todayWords, 'levels': levelProgress};
   }
   Future<void> saveSetting(String key, String value) async { final db = await _source.database; await db.insert('app_settings', {'setting_key': key, 'setting_value': value}, conflictAlgorithm: ConflictAlgorithm.replace); }
   Future<String?> readSetting(String key) async { final db = await _source.database; final rows = await db.query('app_settings', columns: ['setting_value'], where: 'setting_key = ?', whereArgs: [key], limit: 1); return rows.isEmpty ? null : rows.first['setting_value'] as String; }
