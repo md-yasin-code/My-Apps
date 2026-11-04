@@ -25,7 +25,7 @@ The current vocabulary seed contains approximately 126 entries, not the requeste
 ## Run
 ```bash
 flutter pub get
-flutter create . --platforms=android # only when the Android wrapper is missing
+flutter create . --platforms=android --org com.mohammadyasin # only when Android files are absent
 flutter run
 ```
 
