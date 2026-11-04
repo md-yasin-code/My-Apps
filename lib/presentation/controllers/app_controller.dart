@@ -6,7 +6,7 @@ class AppController extends ChangeNotifier {
   final LearningRepository repository;
   ThemeMode themeMode = ThemeMode.system;
   int dailyGoal = 10;
-  bool onboardingComplete = true;
+  bool onboardingComplete = false;
   Future<void> load() async {
     final theme = await repository.readSetting('theme_mode');
     final goal = await repository.readSetting('daily_goal');
