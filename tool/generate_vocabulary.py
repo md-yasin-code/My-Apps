@@ -11,6 +11,20 @@ FIELDS = ["level", "german", "article", "plural", "pronunciation_bn", "meaning_b
 with SOURCE.open(encoding="utf-8-sig", newline="") as stream:
     rows = list(csv.DictReader(stream))
 
+import re
+
+existing_words = set()
+seed_file = ROOT / "lib" / "data" / "seed_data.dart"
+for match in re.finditer(r"""['"]german['"]\s*:\s*['"]([^'"]+)['"]""", seed_file.read_text(encoding="utf-8")):
+    existing_words.add(re.sub(r"^(der|die|das) ", "", match.group(1).strip()).casefold())
+extended_file = ROOT / "lib" / "data" / "extended_vocabulary.dart"
+for match in re.finditer(r'^\s*"\|([^|]+)\|', extended_file.read_text(encoding="utf-8"), re.MULTILINE):
+    if match.group(1) not in {"A1", "A2", "B1", "B2"}:
+        existing_words.add(match.group(1).strip().casefold())
+additional_file = ROOT / "lib" / "data" / "additional_vocabulary.dart"
+for match in re.finditer(r"""['"]german['"]\s*:\s*['"]([^'"]+)['"]""", additional_file.read_text(encoding="utf-8")):
+    existing_words.add(match.group(1).strip().casefold())
+
 seen = set()
 for line, row in enumerate(rows, start=2):
     missing = [field for field in FIELDS if not (row.get(field) or "").strip()]
@@ -19,7 +33,7 @@ for line, row in enumerate(rows, start=2):
     if row["level"] not in {"A1", "A2", "B1", "B2"}:
         raise SystemExit(f"CSV row {line}: invalid CEFR level")
     key = row["german"].strip().casefold()
-    if key in seen:
+    if key in seen or key in existing_words:
         raise SystemExit(f"CSV row {line}: duplicate German headword {row['german']}")
     seen.add(key)
 
