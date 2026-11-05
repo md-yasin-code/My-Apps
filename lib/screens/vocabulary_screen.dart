@@ -55,10 +55,10 @@ class _WordCard extends StatelessWidget {
           ),
         ]),
         const SizedBox(height: 4),
-        Text('\${_typeLabel(word.wordType)}  •  \${word.level}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700)),
+        Text('${_typeLabel(word.wordType)}  •  ${word.level}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700)),
         const SizedBox(height: 7),
-        Text('উচ্চারণ: \${word.pronunciation}  •  \${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.45)),
-        if (word.plural != '—') Padding(padding: const EdgeInsets.only(top: 5), child: Text('বহুবচন: \${word.plural}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))),
+        Text('উচ্চারণ: ${word.pronunciation}  •  ${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.45)),
+        if (word.plural != '—') Padding(padding: const EdgeInsets.only(top: 5), child: Text('বহুবচন: ${word.plural}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))),
         const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Divider(height: 1)),
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(child: Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.45))),
