@@ -9,7 +9,7 @@ Offline-first Flutter app for Bengali speakers learning German (A1–B2).
 - 148 multiple-choice vocabulary and grammar questions (8 original + 140 generated from the expanded word bank).
 - Word and lesson favorites.
 - Flashcard review with a simple two-day / immediate retry schedule.
-- Local quiz answer history, learned-word counts, daily goal setting and active-day streak summary.
+- Local quiz answer history, learned-word counts, daily word goal and active-day streak (vocabulary, lessons and quizzes).
 - Light, dark and system theme modes.
 - Settings, progress dashboard and reset-progress action.
 - SQLite schema v5 migrations for existing installations.
