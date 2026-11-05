@@ -52,7 +52,7 @@ class LearningRepository implements LearningRepositoryContract {
       final existing = await txn.query('learning_progress', where: 'item_type = ? AND item_id = ?', whereArgs: [itemType, itemId], limit: 1);
       final previous = existing.isEmpty ? <String, Object?>{} : existing.first;
       await txn.insert('learning_progress', {'item_type': itemType, 'item_id': itemId, 'status': correct ? 'learning' : 'review', 'repetitions': ((previous['repetitions'] as int?) ?? 0) + 1, 'correct_count': ((previous['correct_count'] as int?) ?? 0) + (correct ? 1 : 0), 'wrong_count': ((previous['wrong_count'] as int?) ?? 0) + (correct ? 0 : 1), 'due_at': now.add(Duration(days: correct ? 2 : 0)).toIso8601String(), 'updated_at': now.toIso8601String()}, conflictAlgorithm: ConflictAlgorithm.replace);
-      await txn.rawInsert('INSERT INTO daily_activity (activity_date, words_reviewed, quiz_correct, quiz_total) VALUES (?, ?, ?, ?) ON CONFLICT(activity_date) DO UPDATE SET words_reviewed = words_reviewed + excluded.words_reviewed, quiz_correct = quiz_correct + excluded.quiz_correct, quiz_total = quiz_total + excluded.quiz_total', [today, itemType == 'word' ? 1 : 0, itemType == 'quiz' && correct ? 1 : 0, itemType == 'quiz' ? 1 : 0]);
+      await txn.rawInsert('INSERT INTO daily_activity (activity_date, minutes, words_reviewed, quiz_correct, quiz_total) VALUES (?, ?, ?, ?, ?) ON CONFLICT(activity_date) DO UPDATE SET minutes = minutes + excluded.minutes, words_reviewed = words_reviewed + excluded.words_reviewed, quiz_correct = quiz_correct + excluded.quiz_correct, quiz_total = quiz_total + excluded.quiz_total', [today, itemType == 'lesson' ? 1 : 0, itemType == 'word' ? 1 : 0, itemType == 'quiz' && correct ? 1 : 0, itemType == 'quiz' ? 1 : 0]);
     });
   }
   Future<Map<String, Object?>> getProgressSummary() async {
@@ -60,7 +60,7 @@ class LearningRepository implements LearningRepositoryContract {
     final words = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress WHERE item_type='word' AND status='learning'")) ?? 0;
     final lessons = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM learning_progress WHERE item_type='lesson'")) ?? 0;
     final totals = (await db.rawQuery('SELECT COALESCE(SUM(quiz_correct),0) AS correct, COALESCE(SUM(quiz_total),0) AS total FROM daily_activity')).first;
-    final activeRows = await db.query('daily_activity', columns: ['activity_date'], where: 'words_reviewed > 0 OR quiz_total > 0', orderBy: 'activity_date DESC');
+    final activeRows = await db.query('daily_activity', columns: ['activity_date'], where: 'minutes > 0 OR words_reviewed > 0 OR quiz_total > 0', orderBy: 'activity_date DESC');
     final activeDates = activeRows.map((row) => row['activity_date'] as String).toSet();
     final today = DateTime.now();
     final todayKey = today.toIso8601String().substring(0, 10);
