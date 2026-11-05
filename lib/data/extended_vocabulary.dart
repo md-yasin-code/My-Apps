@@ -63,7 +63,7 @@ const extendedVocabularyLines = <String>[
   "|Vorteil|der|Vorteile|ফোরটাইল|সুবিধা|Ein Vorteil ist die Flexibilität.|একটি সুবিধা হলো নমনীয়তা।|noun",
   "|Nachteil|der|Nachteile|নাখটাইল|অসুবিধা|Der Preis ist ein Nachteil.|দামটি একটি অসুবিধা।|noun",
   "|Möglichkeit|die|Möglichkeiten|ম্যোগলিশকাইট|সম্ভাবনা / সুযোগ|Es gibt viele Möglichkeiten.|অনেক সুযোগ রয়েছে।|noun",
-  "|sich bewerben|verb|—|জিশ বেভেরবেন|আবেদন করা|Ich bewerbe mich um eine Stelle.|আমি একটি পদের জন্য আবেদন করছি।|verb",
+  "|sich anmelden|verb|—|জিশ আনমেলডেন|নিবন্ধন করা|Ich melde mich für den Kurs an.|আমি কোর্সটির জন্য নিবন্ধন করছি।|verb",
   "|teilnehmen|verb|—|টাইলনেমেন|অংশগ্রহণ করা|Sie nimmt am Kurs teil.|সে কোর্সে অংশগ্রহণ করে।|verb",
   "|sich entscheiden|verb|—|জিশ এন্টশাইডেন|সিদ্ধান্ত নেওয়া|Wir müssen uns heute entscheiden.|আমাদের আজ সিদ্ধান্ত নিতে হবে।|verb",
   "|vermeiden|verb|—|ফেরমাইডেন|এড়িয়ে চলা|Man sollte Fehler vermeiden.|ভুল এড়িয়ে চলা উচিত।|verb",
