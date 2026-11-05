@@ -54,7 +54,7 @@ test/             # widget tests
 ```
 
 ## Database migration notes
-Database v5 adds word type, 140 expanded vocabulary entries, 26 lessons and 140 generated practice questions. Existing v1–v4 databases are upgraded by sequential migrations. User progress and favorites are stored locally.
+Database v3 introduced word type and 100 expanded vocabulary entries; v4 added 26 lessons and 100 generated practice questions; v5 adds 40 more vocabulary entries and 40 matching generated questions. Fresh installs receive the complete seed. Existing v1–v4 databases are upgraded by sequential migrations. User progress and favorites are stored locally.
 
 Seed content is not automatically refreshed for future app versions unless a new migration/content version is added. Add reviewed data to the seed files and update `AppDatabase` migrations deliberately.
 
@@ -63,6 +63,8 @@ Seed content is not automatically refreshed for future app versions unless a new
 - Pronunciation is Bengali phonetic guidance only; no bundled audio/TTS yet.
 - Daily goal currently counts reviewed words; lesson/quiz-only sessions do not complete the word goal.
 - The review scheduler is intentionally simple, not a full SM-2 implementation.
+- Quiz currently uses multiple-choice questions only; fill-in-the-blank and true/false modes remain to be added.
+- A branded launcher icon and native splash screen are still pending.
 - Verify all seed translations and German grammar with an instructor.
 - Run `flutter analyze`, `flutter test`, and `flutter build apk --release` on a configured Flutter/Android environment before publishing.
 - Android platform wrapper, branded launcher icon and native splash assets may need generation/configuration if absent.
