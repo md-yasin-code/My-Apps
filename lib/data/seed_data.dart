@@ -22,7 +22,7 @@ const vocabularySeed = <Map<String, Object?>>[
   {'level':'B2','german':'die Auswirkung','article':'die','plural':'Auswirkungen','pronunciation':'আউসভির্কুং','meaning_bn':'প্রভাব / পরিণতি','example_de':'Die Entscheidung hat große Auswirkungen.','example_bn':'সিদ্ধান্তটির বড় প্রভাব রয়েছে।'},
   {'level':'B2','german':'berücksichtigen','article':'verb','plural':'—','pronunciation':'বের্যুকজিশটিগেন','meaning_bn':'বিবেচনায় নেওয়া','example_de':'Wir müssen alle Aspekte berücksichtigen.','example_bn':'আমাদের সব দিক বিবেচনায় নিতে হবে।'},
   {'level':'B2','german':'die Maßnahme','article':'die','plural':'Maßnahmen','pronunciation':'মাসনামে','meaning_bn':'পদক্ষেপ / ব্যবস্থা','example_de':'Die Maßnahme ist notwendig.','example_bn':'ব্যবস্থাটি প্রয়োজনীয়।'},
-  {'level':'B2','german':'die Voraussetzung','article':'die','plural':'Voraussetzungen','pronunciation':'ফোরাউসজেটসুং','meaning_bn':'পূর্বশর্ত','example_de':'Das ist eine wichtige Voraussetzung.','example_bn':'এটি একটি গুরুত্বপূর্ণ পূর্বশর্ত।'},
+  {'level':'B2','german':'die Bedingung','article':'die','plural':'Bedingungen','pronunciation':'বেডিংগুং','meaning_bn':'শর্ত','example_de':'Das ist eine wichtige Bedingung.','example_bn':'এটি একটি গুরুত্বপূর্ণ শর্ত।'},
   {'level':'B2','german':'dennoch','article':'adverb','plural':'—','pronunciation':'ডেনোখ','meaning_bn':'তা সত্ত্বেও','example_de':'Es war schwierig, dennoch gab er nicht auf.','example_bn':'কঠিন ছিল, তা সত্ত্বেও সে হাল ছাড়েনি।'},
   {'level':'B2','german':'die Angelegenheit','article':'die','plural':'Angelegenheiten','pronunciation':'আনগেলেগেনহাইট','meaning_bn':'বিষয় / ব্যাপার','example_de':'Wir klären die Angelegenheit morgen.','example_bn':'আমরা বিষয়টি আগামীকাল পরিষ্কার করব।'},
 ];
