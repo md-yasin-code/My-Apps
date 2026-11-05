@@ -65,8 +65,41 @@ class AppDatabase {
           await batch.commit(noResult: true);
         }
       });
+    await _syncSpreadsheetContent(_database!);
     return _database!;
   }
+
+  /// Adds newly bundled spreadsheet words when an updated app is opened.
+  /// This keeps content releases independent from schema-version bumps.
+  Future<void> _syncSpreadsheetContent(Database db) async {
+    await db.transaction((txn) async {
+      for (final row in spreadsheetVocabularySeed) {
+        final existing = await txn.query(
+          'vocabulary',
+          columns: ['id'],
+          where: 'level = ? AND german = ?',
+          whereArgs: [row['level'], row['german']],
+          limit: 1,
+        );
+        if (existing.isEmpty) {
+          await txn.insert('vocabulary', row);
+        }
+      }
+      for (final row in buildSpreadsheetVocabularyQuizSeed()) {
+        final existing = await txn.query(
+          'quizzes',
+          columns: ['id'],
+          where: 'level = ? AND question = ?',
+          whereArgs: [row['level'], row['question']],
+          limit: 1,
+        );
+        if (existing.isEmpty) {
+          await txn.insert('quizzes', row);
+        }
+      }
+    });
+  }
+
   Future<void> _createLearningTables(DatabaseExecutor db) async {
     await db.execute('''CREATE TABLE vocabulary (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, german TEXT NOT NULL, article TEXT NOT NULL, plural TEXT NOT NULL, pronunciation TEXT NOT NULL, word_type TEXT NOT NULL DEFAULT 'noun', meaning_bn TEXT NOT NULL, example_de TEXT NOT NULL, example_bn TEXT NOT NULL, is_favorite INTEGER NOT NULL DEFAULT 0)''');
     await db.execute('''CREATE TABLE lessons (id INTEGER PRIMARY KEY AUTOINCREMENT, level TEXT NOT NULL, title TEXT NOT NULL, summary TEXT NOT NULL, rule TEXT NOT NULL, example TEXT NOT NULL, is_favorite INTEGER NOT NULL DEFAULT 0)''');
