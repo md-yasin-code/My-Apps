@@ -21,8 +21,8 @@ A2,Gepäck,das,—,গেপেক,মালপত্র,Mein Gepäck ist sehr s
 A2,Urlaub,der,Urlaube,উরলাউব,ছুটি,Im Sommer mache ich Urlaub.,গ্রীষ্মে আমি ছুটিতে যাই।,noun
 A2,abholen,verb,—,আপহোলেন,নিয়ে আসা / নিতে যাওয়া,Ich hole dich um sechs ab.,আমি তোমাকে ছয়টায় নিতে আসব।,verb
 A2,ausfüllen,verb,—,আউসফ্যুলেন,ফরম পূরণ করা,Füllen Sie bitte das Formular aus.,দয়া করে ফরমটি পূরণ করুন।,verb
-A2,verglichen,verb,—,ফেরগ্লাইখেন,তুলনা করেছে,Wir haben die Preise verglichen.,আমরা দামগুলো তুলনা করেছি।,verb
-A2,bequem,adjective,—,বেকভেম,আরামদায়ক,Der Bus ist bequem.,বাসটি আরামদায়ক।,adjective
+A2,einsteigen,verb,—,আইনশ্টাইগেন,যানে ওঠা,Wir steigen in den Bus ein.,আমরা বাসে উঠি।,verb
+A2,ruhig,adjective,—,রুহিশ,শান্ত,Die Straße ist heute ruhig.,রাস্তাটি আজ শান্ত।,adjective
 B1,Berufserfahrung,die,—,বেরুফসএরফারুং,কর্ম-অভিজ্ঞতা,Für diese Stelle braucht man Berufserfahrung.,এই পদের জন্য কর্ম-অভিজ্ঞতা দরকার।,noun
 B1,Arbeitsvertrag,der,Arbeitsverträge,আরবাইটসফেরট্রাগ,চাকরির চুক্তি,Ich habe den Arbeitsvertrag unterschrieben.,আমি চাকরির চুক্তিতে স্বাক্ষর করেছি।,noun
 B1,Weiterbildung,die,Weiterbildungen,ভাইটারবিল্ডুং,অতিরিক্ত প্রশিক্ষণ,Eine Weiterbildung verbessert die Chancen.,অতিরিক্ত প্রশিক্ষণ সুযোগ বাড়ায়।,noun
@@ -30,14 +30,14 @@ B1,Bewerbungsfrist,die,Bewerbungsfristen,বেভেরবুংসফ্রি
 B1,Erfahrung,die,Erfahrungen,এরফারুং,অভিজ্ঞতা,Praktische Erfahrung ist sehr hilfreich.,বাস্তব অভিজ্ঞতা খুব সহায়ক।,noun
 B1,ermöglichen,verb,—,এরম্যোগলিশেন,সম্ভব করে তোলা,Das Stipendium ermöglicht ein Studium.,বৃত্তিটি পড়াশোনার সুযোগ করে দেয়।,verb
 B1,festlegen,verb,—,ফেস্টলেগেন,নির্ধারণ করা,Wir müssen einen Termin festlegen.,আমাদের একটি সময় নির্ধারণ করতে হবে।,verb
-B1,zuverlässig,adjective,—,ৎসুফেরলেসিশ,নির্ভরযোগ্য,Sie ist eine zuverlässige Kollegin.,তিনি একজন নির্ভরযোগ্য সহকর্মী।,adjective
+B1,sorgfältig,adjective,—,জর্গফেল্টিশ,যত্নশীল / সতর্ক,Er arbeitet sehr sorgfältig.,সে খুব সতর্কভাবে কাজ করে।,adjective
 B1,selten,adverb,—,জেল্টেন,কদাচিৎ,Er kommt selten zu spät.,সে কদাচিৎ দেরি করে।,adverb
-B1,obwohl,conjunction,—,অপভোল,যদিও,Obwohl es spät ist, lerne ich weiter.,যদিও রাত হয়েছে, আমি পড়া চালিয়ে যাচ্ছি।,conjunction
+B1,damit,conjunction,—,ডামিট,যাতে,Ich lerne, damit ich die Prüfung bestehe.,আমি পড়ি, যাতে পরীক্ষায় পাস করি।,conjunction
 B2,Ausnahme,die,Ausnahmen,আউসনামে,ব্যতিক্রম,Es gibt keine Ausnahme von dieser Regel.,এই নিয়মের কোনো ব্যতিক্রম নেই।,noun
 B2,Entwicklung,die,Entwicklungen,এন্টভিকলুং,উন্নয়ন / বিকাশ,Die technische Entwicklung geht schnell voran.,প্রযুক্তিগত উন্নয়ন দ্রুত এগিয়ে যাচ্ছে।,noun
 B2,Zusammenhang,der,Zusammenhänge,ৎসুশামেনহাং,সম্পর্ক / যোগসূত্র,Der Zusammenhang ist schwer zu erkennen.,সম্পর্কটি বোঝা কঠিন।,noun
 B2,Nachweis,der,Nachweise,নাখভাইস,প্রমাণপত্র,Sie müssen einen Nachweis vorlegen.,আপনাকে একটি প্রমাণপত্র জমা দিতে হবে।,noun
-B2,berücksichtigen,verb,—,বের্যুকজিশটিগেন,বিবেচনায় নেওয়া,Wir müssen alle Faktoren berücksichtigen.,আমাদের সব বিষয় বিবেচনায় নিতে হবে।,verb
+B2,nachweisen,verb,—,নাখভাইজেন,প্রমাণ করা,Sie müssen Ihre Kenntnisse nachweisen.,আপনাকে আপনার জ্ঞান প্রমাণ করতে হবে।,verb
 B2,überzeugen,verb,—,উবারৎসয়গেন,বিশ্বাস করানো,Die Argumente konnten mich überzeugen.,যুক্তিগুলো আমাকে বিশ্বাস করাতে পেরেছে।,verb
 B2,erheblich,adjective,—,এরহেবলিশ,উল্লেখযোগ্য,Die Kosten sind erheblich gestiegen.,খরচ উল্লেখযোগ্যভাবে বেড়েছে।,adjective
 B2,folglich,adverb,—,ফল্গলিশ,ফলস্বরূপ,Er war krank und folglich nicht im Büro.,সে অসুস্থ ছিল এবং ফলস্বরূপ অফিসে ছিল না।,adverb
