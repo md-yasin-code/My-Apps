@@ -22,6 +22,10 @@ jobs:
           fi
       - name: Install dependencies
         run: flutter pub get
+      - name: Validate and generate spreadsheet vocabulary
+        run: |
+          python3 tool/generate_vocabulary.py
+          git diff --exit-code -- lib/data/spreadsheet_vocabulary.dart
       - name: Format
         run: dart format .
       - name: Analyze
