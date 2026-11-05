@@ -42,7 +42,7 @@ class AppDatabase {
         if (oldVersion < 4) {
           final batch = db.batch();
           for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
-          for (final row in buildVocabularyQuizSeed()) { batch.insert('quizzes', row); }
+          for (final row in buildExtendedVocabularyQuizSeed()) { batch.insert('quizzes', row); }
           await batch.commit(noResult: true);
         }
         if (oldVersion < 5) {
