@@ -79,7 +79,7 @@ const extendedVocabularyLines = <String>[
   "|sobald|conjunction|—|জোবাল্ট|যেইমাত্র|Sobald ich Zeit habe, rufe ich dich an.|সময় পেলেই আমি তোমাকে ফোন করব।|conjunction",
   "|damit|conjunction|—|ডামিট|যাতে|Ich lerne, damit ich die Prüfung bestehe.|আমি পড়ি, যাতে পরীক্ষায় পাস করি।|conjunction",
   "|B2",
-  "|Auswirkung|die|Auswirkungen|আউসভির্কুং|প্রভাব / পরিণতি|Die Entscheidung hat große Auswirkungen.|সিদ্ধান্তটির বড় প্রভাব রয়েছে।|noun",
+  "|Einfluss|der|Einflüsse|আইনফ্লুস|প্রভাব|Seine Worte haben großen Einfluss.|তার কথার বড় প্রভাব রয়েছে।|noun",
   "|Aufgabe|die|Aufgaben|আউফগাবে|কাজ / দায়িত্ব|Diese Aufgabe ist nicht einfach.|এই কাজটি সহজ নয়।|noun",
   "|Regel|die|Regeln|রেগেল|নিয়ম|Diese Regel ist wichtig.|এই নিয়মটি গুরুত্বপূর্ণ।|noun",
   "|Anlass|der|Anlässe|আনলাস|উপলক্ষ / কারণ|Was ist der Anlass des Besuchs?|এই সফরের কারণ কী?|noun",
