@@ -25,8 +25,10 @@ class _LessonsScreenState extends State<LessonsScreen> {
       Expanded(child: FutureBuilder<List<Lesson>>(future: lessons, builder: (context, snapshot) {
         if (snapshot.hasError) return const Center(child: Text('লেসন লোড করা যায়নি। আবার চেষ্টা করুন।'));
         if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-        return ListView.builder(padding: const EdgeInsets.all(14), itemCount: snapshot.data!.length, itemBuilder: (_, i) {
-          final l = snapshot.data![i];
+        final items = snapshot.data!;
+        if (items.isEmpty) return const Center(child: Text('এই স্তরে কোনো লেসন পাওয়া যায়নি।'));
+        return ListView.builder(padding: const EdgeInsets.all(14), itemCount: items.length, itemBuilder: (_, i) {
+          final l = items[i];
           return Card(child: ExpansionTile(
             onExpansionChanged: (open) { if (open) context.read<LearningRepositoryProvider>().repository.recordProgress(itemType: 'lesson', itemId: l.id, correct: true); },
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [IconButton(tooltip: l.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(l.isFavorite ? Icons.favorite : Icons.favorite_border), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'lesson', itemId: l.id, favorite: !l.isFavorite); setState(() => lessons = _load()); }), const Icon(Icons.expand_more)]),
