@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import '../presentation/controllers/app_controller.dart';
+import '../services/speech_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -15,6 +16,21 @@ class SettingsScreen extends StatelessWidget {
         RadioListTile<ThemeMode>(title: const Text('লাইট মোড'), value: ThemeMode.light, groupValue: app.themeMode, onChanged: (v) { if (v != null) app.setTheme(v); }),
         RadioListTile<ThemeMode>(title: const Text('ডার্ক মোড'), value: ThemeMode.dark, groupValue: app.themeMode, onChanged: (v) { if (v != null) app.setTheme(v); }),
       ])),
+      const SizedBox(height: 18),
+      const Text('জার্মান উচ্চারণ', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+      Card(child: ListTile(
+        leading: const Icon(Icons.record_voice_over_rounded),
+        title: const Text('ভয়েস পরীক্ষা করুন'),
+        subtitle: const Text('ফোনে German (de-DE) voice data ইনস্টল থাকতে হবে'),
+        trailing: const Icon(Icons.volume_up_rounded),
+        onTap: () async {
+          try {
+            await SpeechService.instance.speakGerman('Guten Tag! Ich lerne Deutsch.');
+          } catch (_) {
+            if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('German voice পাওয়া যায়নি। Android Text-to-Speech সেটিংসে German voice data ইনস্টল করুন।')));
+          }
+        },
+      )),
       const SizedBox(height: 18),
       const Text('প্রতিদিনের লক্ষ্য', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
       Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
