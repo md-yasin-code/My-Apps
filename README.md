@@ -6,7 +6,7 @@ Offline-first Flutter app for Bengali speakers learning German (A1–B2).
 - Bengali onboarding and dashboard.
 - Offline SQLite vocabulary with level, word-type, search, Bengali meaning, pronunciation, plural and examples.
 - A1–B2 grammar library with 34 lessons (8 original + 26 added).
-- 148 multiple-choice vocabulary and grammar questions (8 original + 140 generated from the expanded word bank).
+- 191 multiple-choice vocabulary and grammar questions (8 original + 140 expanded-bank + 43 spreadsheet-bank questions).
 - Word and lesson favorites.
 - Flashcard review with a simple two-day / immediate retry schedule.
 - Local quiz answer history, learned-word counts, daily word goal and active-day streak (vocabulary, lessons and quizzes).
@@ -48,16 +48,18 @@ flutter test
 ```
 lib/
   data/           # SQLite schema, migrations and bundled offline curriculum
-  services/       # German text-to-speech service
-  widgets/        # reusable glass UI components
-assets/data/      # Excel-compatible CSV vocabulary master
-tool/             # CSV-to-Dart vocabulary generator
   domain/         # repository contracts
   models/         # typed learning models
   presentation/   # app-level state controllers
   repositories/   # SQLite repository implementation
   screens/        # Bengali Flutter screens
-test/             # widget tests
+  services/       # German text-to-speech service
+  widgets/        # reusable glass UI components
+assets/data/      # Excel-compatible CSV vocabulary master
+tool/             # CSV-to-Dart vocabulary generator
+
+test/             # widget and content tests
+
 ```
 
 ## Database migration notes
