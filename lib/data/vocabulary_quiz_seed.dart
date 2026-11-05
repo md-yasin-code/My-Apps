@@ -1,5 +1,6 @@
 import 'extended_vocabulary.dart';
 import 'additional_vocabulary.dart';
+import 'spreadsheet_vocabulary.dart';
 
 List<Map<String, Object?>> buildExtendedVocabularyQuizSeed() {
   final allWords = <Map<String, Object?>>[...buildExtendedVocabulary(), ...additionalVocabularySeed];
@@ -29,4 +30,8 @@ List<Map<String, Object?>> _buildQuestions(List<Map<String, Object?>> source, Li
     questions.add({'level': word['level'], 'question': 'কোন জার্মান শব্দটির অর্থ: “${word['meaning_bn']}”?', 'options': rotated.join('|'), 'answer': word['german'], 'explanation': '${word['german']} = ${word['meaning_bn']}। উদাহরণ: ${word['example_de']} — ${word['example_bn']}'});
   }
   return questions;
+}
+List<Map<String, Object?>> buildSpreadsheetVocabularyQuizSeed() {
+  final allWords = <Map<String, Object?>>[...buildExtendedVocabulary(), ...additionalVocabularySeed, ...spreadsheetVocabularySeed];
+  return _buildQuestions(spreadsheetVocabularySeed, allWords, offset: buildExtendedVocabulary().length + additionalVocabularySeed.length);
 }
