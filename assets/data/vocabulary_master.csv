@@ -13,10 +13,10 @@ A1,öffnen,verb,—,অ্যফনেন,খোলা,Kannst du das Fenster öf
 A1,schließen,verb,—,শ্লিসেন,বন্ধ করা,Bitte schließen Sie die Tür.,দয়া করে দরজাটি বন্ধ করুন।,verb
 A1,teuer,adjective,—,টয়ার,দামি,Das Auto ist sehr teuer.,গাড়িটি খুব দামি।,adjective
 A1,billig,adjective,—,বিলিশ,সস্তা,Dieses Buch ist billig.,এই বইটি সস্তা।,adjective
-A2,Termin,der,Termine,টেরমিন,নির্ধারিত সময় / অ্যাপয়েন্টমেন্ট,Ich habe morgen einen Termin.,আগামীকাল আমার একটি অ্যাপয়েন্টমেন্ট আছে।,noun
+A2,Besprechung,die,Besprechungen,বেশপ্রেখুং,আলোচনা সভা,Die Besprechung beginnt um zehn.,আলোচনা সভাটি দশটায় শুরু হয়।,noun
 A2,Verspätung,die,Verspätungen,ফেরশপেটুং,দেরি,Der Zug hat zehn Minuten Verspätung.,ট্রেনটি দশ মিনিট দেরি করছে।,noun
 A2,Haltestelle,die,Haltestellen,হাল্টেশ্টেলে,বাস / ট্রামের স্টপ,Wir warten an der Haltestelle.,আমরা স্টপে অপেক্ষা করছি।,noun
-A2,Reise,die,Reisen,রাইজে,ভ্রমণ,Die Reise dauert drei Tage.,ভ্রমণটি তিন দিন স্থায়ী হয়।,noun
+A2,Reiseplanung,die,Reiseplanungen,রাইজেপ্লানুং,ভ্রমণ পরিকল্পনা,Eine gute Reiseplanung spart Zeit.,ভালো ভ্রমণ পরিকল্পনা সময় বাঁচায়।,noun
 A2,Gepäck,das,—,গেপেক,মালপত্র,Mein Gepäck ist sehr schwer.,আমার মালপত্র খুব ভারী।,noun
 A2,Urlaub,der,Urlaube,উরলাউব,ছুটি,Im Sommer mache ich Urlaub.,গ্রীষ্মে আমি ছুটিতে যাই।,noun
 A2,abholen,verb,—,আপহোলেন,নিয়ে আসা / নিতে যাওয়া,Ich hole dich um sechs ab.,আমি তোমাকে ছয়টায় নিতে আসব।,verb
@@ -27,18 +27,18 @@ B1,Berufserfahrung,die,—,বেরুফসএরফারুং,কর্ম-
 B1,Arbeitsvertrag,der,Arbeitsverträge,আরবাইটসফেরট্রাগ,চাকরির চুক্তি,Ich habe den Arbeitsvertrag unterschrieben.,আমি চাকরির চুক্তিতে স্বাক্ষর করেছি।,noun
 B1,Weiterbildung,die,Weiterbildungen,ভাইটারবিল্ডুং,অতিরিক্ত প্রশিক্ষণ,Eine Weiterbildung verbessert die Chancen.,অতিরিক্ত প্রশিক্ষণ সুযোগ বাড়ায়।,noun
 B1,Bewerbungsfrist,die,Bewerbungsfristen,বেভেরবুংসফ্রিস্ট,আবেদনের শেষ সময়,Die Bewerbungsfrist endet im Juni.,আবেদনের শেষ সময় জুনে শেষ হয়।,noun
-B1,Erfahrung,die,Erfahrungen,এরফারুং,অভিজ্ঞতা,Praktische Erfahrung ist sehr hilfreich.,বাস্তব অভিজ্ঞতা খুব সহায়ক।,noun
-B1,ermöglichen,verb,—,এরম্যোগলিশেন,সম্ভব করে তোলা,Das Stipendium ermöglicht ein Studium.,বৃত্তিটি পড়াশোনার সুযোগ করে দেয়।,verb
+B1,Qualifikation,die,Qualifikationen,কভালিফিকাটসিওন,যোগ্যতা,Die Qualifikation ist für die Stelle wichtig.,পদটির জন্য যোগ্যতা গুরুত্বপূর্ণ।,noun
+B1,beantragen,verb,—,বেআন্ট্রাগেন,আবেদন করা,Ich möchte ein Visum beantragen.,আমি ভিসার জন্য আবেদন করতে চাই।,verb
 B1,festlegen,verb,—,ফেস্টলেগেন,নির্ধারণ করা,Wir müssen einen Termin festlegen.,আমাদের একটি সময় নির্ধারণ করতে হবে।,verb
 B1,sorgfältig,adjective,—,জর্গফেল্টিশ,যত্নশীল / সতর্ক,Er arbeitet sehr sorgfältig.,সে খুব সতর্কভাবে কাজ করে।,adjective
 B1,selten,adverb,—,জেল্টেন,কদাচিৎ,Er kommt selten zu spät.,সে কদাচিৎ দেরি করে।,adverb
-B1,damit,conjunction,—,ডামিট,যাতে,Ich lerne, damit ich die Prüfung bestehe.,আমি পড়ি, যাতে পরীক্ষায় পাস করি।,conjunction
+B1,obgleich,conjunction,—,অপগ্লাইখ,যদিও,Obgleich es schwierig ist, versuchen wir es.,যদিও এটি কঠিন, আমরা চেষ্টা করি।,conjunction
 B2,Ausnahme,die,Ausnahmen,আউসনামে,ব্যতিক্রম,Es gibt keine Ausnahme von dieser Regel.,এই নিয়মের কোনো ব্যতিক্রম নেই।,noun
-B2,Entwicklung,die,Entwicklungen,এন্টভিকলুং,উন্নয়ন / বিকাশ,Die technische Entwicklung geht schnell voran.,প্রযুক্তিগত উন্নয়ন দ্রুত এগিয়ে যাচ্ছে।,noun
-B2,Zusammenhang,der,Zusammenhänge,ৎসুশামেনহাং,সম্পর্ক / যোগসূত্র,Der Zusammenhang ist schwer zu erkennen.,সম্পর্কটি বোঝা কঠিন।,noun
+B2,Anpassung,die,Anpassungen,আনপাসুং,মানিয়ে নেওয়া / অভিযোজন,Die Anpassung braucht Zeit.,মানিয়ে নিতে সময় লাগে।,noun
+B2,Verhältnis,das,Verhältnisse,ফেরহেল্টনিস,সম্পর্ক / অনুপাত,Das Verhältnis zwischen den Zahlen ist klar.,সংখ্যাগুলোর অনুপাত স্পষ্ট।,noun
 B2,Nachweis,der,Nachweise,নাখভাইস,প্রমাণপত্র,Sie müssen einen Nachweis vorlegen.,আপনাকে একটি প্রমাণপত্র জমা দিতে হবে।,noun
-B2,nachweisen,verb,—,নাখভাইজেন,প্রমাণ করা,Sie müssen Ihre Kenntnisse nachweisen.,আপনাকে আপনার জ্ঞান প্রমাণ করতে হবে।,verb
+B2,belegen,verb,—,বেলেগেন,প্রমাণ / সমর্থন করা,Die Studie kann diese Aussage belegen.,গবেষণাটি এই বক্তব্যের পক্ষে প্রমাণ দিতে পারে।,verb
 B2,überzeugen,verb,—,উবারৎসয়গেন,বিশ্বাস করানো,Die Argumente konnten mich überzeugen.,যুক্তিগুলো আমাকে বিশ্বাস করাতে পেরেছে।,verb
 B2,erheblich,adjective,—,এরহেবলিশ,উল্লেখযোগ্য,Die Kosten sind erheblich gestiegen.,খরচ উল্লেখযোগ্যভাবে বেড়েছে।,adjective
-B2,folglich,adverb,—,ফল্গলিশ,ফলস্বরূপ,Er war krank und folglich nicht im Büro.,সে অসুস্থ ছিল এবং ফলস্বরূপ অফিসে ছিল না।,adverb
-B2,sofern,conjunction,—,জোফের্ন,যদি / শর্তসাপেক্ষে,Sofern du Zeit hast, können wir sprechen.,তোমার সময় থাকলে আমরা কথা বলতে পারি।,conjunction
+B2,dementsprechend,adverb,—,ডেমএন্টশপ্রেখেন্ট,সেই অনুযায়ী,Die Nachfrage ist gestiegen; dementsprechend erhöhen wir die Produktion.,চাহিদা বেড়েছে; সেই অনুযায়ী আমরা উৎপাদন বাড়াচ্ছি।,adverb
+B2,wenngleich,conjunction,—,ভেনগ্লাইখ,যদিও,Das Ziel ist erreichbar, wenngleich es schwierig ist.,লক্ষ্যটি অর্জনযোগ্য, যদিও এটি কঠিন।,conjunction
