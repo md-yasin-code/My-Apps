@@ -19,7 +19,7 @@ class OnboardingScreen extends StatelessWidget {
     SizedBox(width: double.infinity, child: FilledButton(onPressed: () => context.read<AppController>().finishOnboarding(), child: const Padding(padding: EdgeInsets.all(14), child: Text('শেখা শুরু করি')))),
     const SizedBox(height: 12),
     const Center(child: Text('স্বাধীন শিক্ষাসহায়ক অ্যাপ • Goethe-Institut-এর অফিসিয়াল অ্যাপ নয়', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, color: Colors.grey))),
-  ])))),
+  ]))));
 }
 class _Feature extends StatelessWidget {
   const _Feature({required this.icon, required this.title, required this.detail});
