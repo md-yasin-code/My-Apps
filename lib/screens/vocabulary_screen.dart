@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import '../models/vocabulary_word.dart';
+import '../services/speech_service.dart';
+import '../widgets/glass_surface.dart';
 
 class VocabularyScreen extends StatefulWidget {
   const VocabularyScreen({super.key});
@@ -27,7 +29,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
         final data = snapshot.data!;
         if (data.isEmpty) return const Center(child: Text('কোনো শব্দ পাওয়া যায়নি।'));
-        return ListView.builder(padding: const EdgeInsets.all(14), itemCount: data.length, itemBuilder: (_, i) => _WordCard(word: data[i], onChanged: _refresh));
+        return ListView.builder(padding: const EdgeInsets.all(14), itemCount: data.length, itemBuilder: (_, i) => TweenAnimationBuilder<double>(tween: Tween(begin: 0, end: 1), duration: Duration(milliseconds: 260 + (i % 5) * 45), curve: Curves.easeOutCubic, builder: (context, value, child) => Opacity(opacity: value, child: Transform.translate(offset: Offset(0, 12 * (1 - value)), child: child)), child: _WordCard(word: data[i], onChanged: _refresh)));
       })),
     ]),
   );
@@ -37,21 +39,45 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 class _WordCard extends StatelessWidget {
   const _WordCard({required this.word, required this.onChanged});
   final VocabularyWord word; final VoidCallback onChanged;
-  @override Widget build(BuildContext context) => Card(
-    margin: const EdgeInsets.only(bottom: 10),
-    child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(children: [
-        Expanded(child: Text(_displayHeadword(word), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-        Chip(label: Text(word.level)),
-        IconButton(tooltip: word.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(word.isFavorite ? Icons.favorite : Icons.favorite_border, color: word.isFavorite ? Colors.red : null), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'word', itemId: word.id, favorite: !word.isFavorite); onChanged(); }),
+  @override Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 12),
+    child: GlassSurface(
+      radius: 20,
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Expanded(child: Text(_displayHeadword(word), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: -0.3))),
+          IconButton.filledTonal(tooltip: 'জার্মান উচ্চারণ শুনুন', onPressed: () => _speak(context, _displayHeadword(word)), icon: const Icon(Icons.volume_up_rounded)),
+          IconButton(
+            tooltip: word.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন',
+            icon: Icon(word.isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded, color: word.isFavorite ? Colors.redAccent : null),
+            onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'word', itemId: word.id, favorite: !word.isFavorite); onChanged(); },
+          ),
+        ]),
+        const SizedBox(height: 4),
+        Text('\${_typeLabel(word.wordType)}  •  \${word.level}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700)),
+        const SizedBox(height: 7),
+        Text('উচ্চারণ: \${word.pronunciation}  •  \${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.45)),
+        if (word.plural != '—') Padding(padding: const EdgeInsets.only(top: 5), child: Text('বহুবচন: \${word.plural}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Divider(height: 1)),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(child: Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.45))),
+          IconButton(visualDensity: VisualDensity.compact, tooltip: 'উদাহরণের উচ্চারণ শুনুন', onPressed: () => _speak(context, word.exampleDe), icon: const Icon(Icons.volume_up_outlined, size: 20)),
+        ]),
+        Text(word.exampleBn, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.45)),
       ]),
-      Text('${_typeLabel(word.wordType)} • উচ্চারণ: ${word.pronunciation} • ${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600)),
-      if (word.plural != '—') Text('বহুবচন: ${word.plural}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-      const Divider(height: 20),
-      Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w600)),
-      Text(word.exampleBn, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-    ])),
+    ),
   );
+
+  Future<void> _speak(BuildContext context, String text) async {
+    try {
+      await SpeechService.instance.speakGerman(text);
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('জার্মান ভয়েস পাওয়া যায়নি। ফোনের Text-to-Speech সেটিংসে German voice ইনস্টল করুন।')));
+      }
+    }
+  }
 }
 String _displayHeadword(VocabularyWord word) { final noun = word.wordType == 'noun' || ['der', 'die', 'das'].contains(word.article); if (!noun) return word.german; final prefix = '${word.article} '; return word.german.startsWith(prefix) ? word.german : '$prefix${word.german}'; }
 String _typeLabel(String type) => const {'noun':'বিশেষ্য','verb':'ক্রিয়া','adjective':'বিশেষণ','adverb':'ক্রিয়া বিশেষণ','conjunction':'সংযোজক','preposition':'পদান্বয়ী অব্যয়' }[type] ?? type;
