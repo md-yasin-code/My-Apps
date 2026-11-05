@@ -17,9 +17,9 @@ class DeutschBanglaApp extends StatelessWidget {
         cardTheme: CardThemeData(elevation: 0, color: brightness == Brightness.light ? const Color(0xFFFFFFFF) : const Color(0xFF1A2521), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
           TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-          TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
           TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
         }),
       );
