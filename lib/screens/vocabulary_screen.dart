@@ -21,7 +21,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         onChanged: (v) { query = v; _refresh(); },
       )),
       _filters(['All','A1','A2','B1','B2'], level, (v) { level = v; _refresh(); }),
-      _filters(['All','noun','verb','adjective','adverb','conjunction'], wordType, (v) { wordType = v; _refresh(); }),
+      _filters(['All','noun','verb','adjective','adverb','conjunction','preposition'], wordType, (v) { wordType = v; _refresh(); }),
       Expanded(child: FutureBuilder<List<VocabularyWord>>(future: words, builder: (context, snapshot) {
         if (snapshot.hasError) return const Center(child: Text('শব্দ লোড করা যায়নি। আবার চেষ্টা করুন।'));
         if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
@@ -46,7 +46,7 @@ class _WordCard extends StatelessWidget {
         IconButton(tooltip: word.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(word.isFavorite ? Icons.favorite : Icons.favorite_border, color: word.isFavorite ? Colors.red : null), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'word', itemId: word.id, favorite: !word.isFavorite); onChanged(); }),
       ]),
       Text('${_typeLabel(word.wordType)} • উচ্চারণ: ${word.pronunciation} • ${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600)),
-      if (word.plural != '—') Text('Plural: ${word.plural}', style: const TextStyle(color: Colors.black54)),
+      if (word.plural != '—') Text('বহুবচন: ${word.plural}', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
       const Divider(height: 20),
       Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w600)),
       Text(word.exampleBn, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
@@ -54,4 +54,4 @@ class _WordCard extends StatelessWidget {
   );
 }
 String _displayHeadword(VocabularyWord word) { final noun = word.wordType == 'noun' || ['der', 'die', 'das'].contains(word.article); if (!noun) return word.german; final prefix = '${word.article} '; return word.german.startsWith(prefix) ? word.german : '$prefix${word.german}'; }
-String _typeLabel(String type) => const {'noun':'বিশেষ্য','verb':'ক্রিয়া','adjective':'বিশেষণ','adverb':'ক্রিয়া বিশেষণ','conjunction':'সংযোজক' }[type] ?? type;
+String _typeLabel(String type) => const {'noun':'বিশেষ্য','verb':'ক্রিয়া','adjective':'বিশেষণ','adverb':'ক্রিয়া বিশেষণ','conjunction':'সংযোজক','preposition':'পদান্বয়ী অব্যয়' }[type] ?? type;
