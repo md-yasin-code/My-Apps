@@ -41,15 +41,17 @@ class _WordCard extends StatelessWidget {
     margin: const EdgeInsets.only(bottom: 10),
     child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Expanded(child: Text('${word.article == 'noun' || word.wordType == 'noun' ? '${word.article} ' : ''}${word.german}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        Expanded(child: Text(_displayHeadword(word), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         Chip(label: Text(word.level)),
         IconButton(tooltip: word.isFavorite ? 'পছন্দের তালিকা থেকে সরান' : 'পছন্দের তালিকায় রাখুন', icon: Icon(word.isFavorite ? Icons.favorite : Icons.favorite_border, color: word.isFavorite ? Colors.red : null), onPressed: () async { await context.read<LearningRepositoryProvider>().repository.setFavorite(itemType: 'word', itemId: word.id, favorite: !word.isFavorite); onChanged(); }),
       ]),
-      Text('${word.wordType} • উচ্চারণ: ${word.pronunciation} • ${word.meaningBn}', style: const TextStyle(color: Color(0xFF176B5B), fontWeight: FontWeight.w600)),
+      Text('${_typeLabel(word.wordType)} • উচ্চারণ: ${word.pronunciation} • ${word.meaningBn}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600)),
       if (word.plural != '—') Text('Plural: ${word.plural}', style: const TextStyle(color: Colors.black54)),
       const Divider(height: 20),
       Text(word.exampleDe, style: const TextStyle(fontWeight: FontWeight.w600)),
-      Text(word.exampleBn, style: const TextStyle(color: Colors.black54)),
+      Text(word.exampleBn, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
     ])),
   );
 }
+String _displayHeadword(VocabularyWord word) { final noun = word.wordType == 'noun' || ['der', 'die', 'das'].contains(word.article); if (!noun) return word.german; final prefix = '${word.article} '; return word.german.startsWith(prefix) ? word.german : '$prefix${word.german}'; }
+String _typeLabel(String type) => const {'noun':'বিশেষ্য','verb':'ক্রিয়া','adjective':'বিশেষণ','adverb':'ক্রিয়া বিশেষণ','conjunction':'সংযোজক' }[type] ?? type;
