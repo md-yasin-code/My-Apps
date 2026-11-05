@@ -29,7 +29,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
       const SizedBox(height: 18),
       Expanded(child: Card(child: Padding(padding: const EdgeInsets.all(22), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Chip(label: Text(word.level)),
-        Text('${word.article == 'der' || word.article == 'die' || word.article == 'das' ? '${word.article} ' : ''}${word.german}', textAlign: TextAlign.center, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
+        Text(_headword(word), textAlign: TextAlign.center, style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         if (revealed) ...[Text(word.meaningBn, style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w600)), Text('উচ্চারণ: ${word.pronunciation}'), const SizedBox(height: 14), Text(word.exampleDe, textAlign: TextAlign.center), Text(word.exampleBn, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey))] else const Text('শব্দটির বাংলা অর্থ মনে করার চেষ্টা করুন।'),
       ])))),
@@ -37,3 +37,4 @@ class _ReviewScreenState extends State<ReviewScreen> {
     ]));
   }));
 }
+String _headword(VocabularyWord word) { if (!['der', 'die', 'das'].contains(word.article)) return word.german; final prefix = '${word.article} '; return word.german.startsWith(prefix) ? word.german : '$prefix${word.german}'; }
