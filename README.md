@@ -15,7 +15,7 @@ Offline-first Flutter app for Bengali speakers learning German (A1–B2).
 - SQLite schema v4 migrations for existing installations.
 
 ## Content size and quality note
-The current vocabulary seed contains approximately 126 entries, not the requested 400–600. The lesson and quiz targets are met by count, but the generated vocabulary quiz distractors and all Bengali/German content still need instructor review. This is a learning prototype, not a complete or certified CEFR course.
+The current vocabulary seed contains approximately 166 entries, not the requested 400–600. The lesson and quiz targets are met by count, but the generated vocabulary quiz distractors and all Bengali/German content still need instructor review. This is a learning prototype, not a complete or certified CEFR course.
 
 ## Tech stack
 - Flutter / Dart (SDK >=3.3.0 <4.0.0)
@@ -54,7 +54,7 @@ test/             # widget tests
 ```
 
 ## Database migration notes
-Database v4 adds word type, 100 additional vocabulary entries, 26 lessons and 100 generated practice questions. Existing v1–v3 databases are upgraded by sequential migrations. User progress and favorites are stored locally.
+Database v4 adds word type, 140 additional vocabulary entries, 26 lessons and 100 generated practice questions. Existing v1–v3 databases are upgraded by sequential migrations. User progress and favorites are stored locally.
 
 Seed content is not automatically refreshed for future app versions unless a new migration/content version is added. Add reviewed data to the seed files and update `AppDatabase` migrations deliberately.
 
