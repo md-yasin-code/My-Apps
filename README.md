@@ -71,9 +71,9 @@ Database v3 introduced word type and 100 expanded vocabulary entries; v4 added 2
 3. Keep German headwords unique (without `der/die/das` prefixes in the `german` column). Use `—` when a plural does not apply.
 4. Save as **CSV UTF-8** and commit the updated CSV to GitHub.
 5. Run `python3 tool/generate_vocabulary.py` to regenerate `lib/data/spreadsheet_vocabulary.dart`.
-6. For an app update, increment the SQLite schema version and add a migration that inserts the new seed rows and generated quiz items. Existing users do not receive new bundled content until that migration is included.
+6. Commit both the CSV and regenerated Dart file, then build and release the updated app. On startup, the app checks for new spreadsheet-managed words and quiz items and adds only missing entries to SQLite; no schema-version bump is needed for ordinary vocabulary additions.
 
-The generator checks required columns, CEFR levels and duplicate German headwords before writing Dart. The CSV is Excel-compatible; the committed Dart file keeps all lessons and words available offline.
+The generator checks required columns, CEFR levels and duplicate German headwords against the existing bundled word banks before writing Dart. Startup sync inserts newly bundled rows without deleting user progress or favorites. The CSV is Excel-compatible; the committed Dart file keeps all lessons and words available offline.
 
 ## Known limitations before store release
 - Vocabulary is still below the 400–600 target.
