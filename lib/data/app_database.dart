@@ -4,19 +4,21 @@ import 'seed_data.dart';
 import 'extended_vocabulary.dart';
 import 'extended_lessons.dart';
 import 'vocabulary_quiz_seed.dart';
+import 'additional_vocabulary.dart';
 
 class AppDatabase {
   Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
     final path = p.join(await getDatabasesPath(), 'deutsch_bangla.db');
-    _database = await openDatabase(path, version: 4,
+    _database = await openDatabase(path, version: 5,
       onCreate: (db, version) async {
         await _createLearningTables(db);
         await _createUserTables(db);
         final batch = db.batch();
         for (final row in vocabularySeed) { batch.insert('vocabulary', row); }
         for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row); }
+        for (final row in additionalVocabularySeed) { batch.insert('vocabulary', row); }
         for (final row in lessonSeed) { batch.insert('lessons', row); }
         for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
         for (final row in quizSeed) { batch.insert('quizzes', row); }
@@ -41,6 +43,12 @@ class AppDatabase {
           final batch = db.batch();
           for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
           for (final row in buildVocabularyQuizSeed()) { batch.insert('quizzes', row); }
+          await batch.commit(noResult: true);
+        }
+        if (oldVersion < 5) {
+          final batch = db.batch();
+          for (final row in additionalVocabularySeed) { batch.insert('vocabulary', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
+          for (final row in buildAdditionalVocabularyQuizSeed()) { batch.insert('quizzes', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
           await batch.commit(noResult: true);
         }
       });
