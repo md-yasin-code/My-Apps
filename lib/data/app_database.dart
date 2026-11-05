@@ -5,13 +5,14 @@ import 'extended_vocabulary.dart';
 import 'extended_lessons.dart';
 import 'vocabulary_quiz_seed.dart';
 import 'additional_vocabulary.dart';
+import 'spreadsheet_vocabulary.dart';
 
 class AppDatabase {
   Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
     final path = p.join(await getDatabasesPath(), 'deutsch_bangla.db');
-    _database = await openDatabase(path, version: 5,
+    _database = await openDatabase(path, version: 6,
       onCreate: (db, version) async {
         await _createLearningTables(db);
         await _createUserTables(db);
@@ -19,10 +20,12 @@ class AppDatabase {
         for (final row in vocabularySeed) { batch.insert('vocabulary', row); }
         for (final row in buildExtendedVocabulary()) { batch.insert('vocabulary', row); }
         for (final row in additionalVocabularySeed) { batch.insert('vocabulary', row); }
+        for (final row in spreadsheetVocabularySeed) { batch.insert('vocabulary', row); }
         for (final row in lessonSeed) { batch.insert('lessons', row); }
         for (final row in extendedLessonSeed) { batch.insert('lessons', row); }
         for (final row in quizSeed) { batch.insert('quizzes', row); }
         for (final row in buildVocabularyQuizSeed()) { batch.insert('quizzes', row); }
+        for (final row in buildSpreadsheetVocabularyQuizSeed()) { batch.insert('quizzes', row); }
         await batch.commit(noResult: true);
         await db.execute("UPDATE vocabulary SET word_type = CASE WHEN article IN ('verb','adverb','adjective','conjunction') THEN article ELSE COALESCE(word_type, 'noun') END");
       },
@@ -49,6 +52,16 @@ class AppDatabase {
           final batch = db.batch();
           for (final row in additionalVocabularySeed) { batch.insert('vocabulary', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
           for (final row in buildAdditionalVocabularyQuizSeed()) { batch.insert('quizzes', row, conflictAlgorithm: ConflictAlgorithm.ignore); }
+          await batch.commit(noResult: true);
+        }
+        if (oldVersion < 6) {
+          final batch = db.batch();
+          for (final row in spreadsheetVocabularySeed) {
+            batch.insert('vocabulary', row, conflictAlgorithm: ConflictAlgorithm.ignore);
+          }
+          for (final row in buildSpreadsheetVocabularyQuizSeed()) {
+            batch.insert('quizzes', row, conflictAlgorithm: ConflictAlgorithm.ignore);
+          }
           await batch.commit(noResult: true);
         }
       });
