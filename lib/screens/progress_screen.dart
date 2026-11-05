@@ -45,7 +45,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               const Text('প্রতিদিনের ছোট লক্ষ্য পূরণে মনোযোগ দিন।', style: TextStyle(color: Colors.grey)),
             ]))),
             const Padding(padding: EdgeInsets.only(top: 18, bottom: 8), child: Text('লেভেল অনুযায়ী অগ্রগতি', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
-            ...levels.map((item) => Card(child: Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(item['level'].toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)), const SizedBox(height: 6), Text('শব্দ: ${item['words']} • লেসন: ${item['lessons']}'), Text('কুইজ: ${item['quiz_correct']} / ${item['quiz_total']} সঠিক')]))),
+            ...levels.map((item) => Card(child: Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(item['level'].toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)), const SizedBox(height: 6), Text('শব্দ: ${item['words']} • লেসন: ${item['lessons']}'), Text('কুইজ: ${item['quiz_correct']} / ${item['quiz_total']} সঠিক')])))),
             _stat('বর্তমান ধারাবাহিকতা', '${data['current_streak'] ?? 0} দিন', Icons.local_fire_department),
             _stat('শেখা শব্দ', '${data['words_learned'] ?? 0}', Icons.translate),
             _stat('অনুশীলন করা লেসন', '${data['lessons_touched'] ?? 0}', Icons.menu_book),
