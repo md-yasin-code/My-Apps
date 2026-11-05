@@ -1,6 +1,11 @@
 import 'extended_vocabulary.dart';
 import 'additional_vocabulary.dart';
 
+List<Map<String, Object?>> buildExtendedVocabularyQuizSeed() {
+  final allWords = <Map<String, Object?>>[...buildExtendedVocabulary(), ...additionalVocabularySeed];
+  return _buildQuestions(buildExtendedVocabulary(), allWords);
+}
+
 List<Map<String, Object?>> buildVocabularyQuizSeed() {
   final allWords = <Map<String, Object?>>[...buildExtendedVocabulary(), ...additionalVocabularySeed];
   return _buildQuestions(allWords, allWords);
