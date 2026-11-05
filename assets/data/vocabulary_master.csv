@@ -32,7 +32,7 @@ B1,beantragen,verb,—,বেআন্ট্রাগেন,আবেদন ক�
 B1,festlegen,verb,—,ফেস্টলেগেন,নির্ধারণ করা,Wir müssen einen Termin festlegen.,আমাদের একটি সময় নির্ধারণ করতে হবে।,verb
 B1,sorgfältig,adjective,—,জর্গফেল্টিশ,যত্নশীল / সতর্ক,Er arbeitet sehr sorgfältig.,সে খুব সতর্কভাবে কাজ করে।,adjective
 B1,selten,adverb,—,জেল্টেন,কদাচিৎ,Er kommt selten zu spät.,সে কদাচিৎ দেরি করে।,adverb
-B1,obgleich,conjunction,—,অপগ্লাইখ,যদিও,Obgleich es schwierig ist, versuchen wir es.,যদিও এটি কঠিন, আমরা চেষ্টা করি।,conjunction
+B1,obgleich,conjunction,—,অপগ্লাইখ,যদিও,"Obgleich es schwierig ist, versuchen wir es.","যদিও এটি কঠিন, আমরা চেষ্টা করি।",conjunction
 B2,Ausnahme,die,Ausnahmen,আউসনামে,ব্যতিক্রম,Es gibt keine Ausnahme von dieser Regel.,এই নিয়মের কোনো ব্যতিক্রম নেই।,noun
 B2,Anpassung,die,Anpassungen,আনপাসুং,মানিয়ে নেওয়া / অভিযোজন,Die Anpassung braucht Zeit.,মানিয়ে নিতে সময় লাগে।,noun
 B2,Verhältnis,das,Verhältnisse,ফেরহেল্টনিস,সম্পর্ক / অনুপাত,Das Verhältnis zwischen den Zahlen ist klar.,সংখ্যাগুলোর অনুপাত স্পষ্ট।,noun
@@ -41,4 +41,4 @@ B2,belegen,verb,—,বেলেগেন,প্রমাণ / সমর্থ�
 B2,überzeugen,verb,—,উবারৎসয়গেন,বিশ্বাস করানো,Die Argumente konnten mich überzeugen.,যুক্তিগুলো আমাকে বিশ্বাস করাতে পেরেছে।,verb
 B2,erheblich,adjective,—,এরহেবলিশ,উল্লেখযোগ্য,Die Kosten sind erheblich gestiegen.,খরচ উল্লেখযোগ্যভাবে বেড়েছে।,adjective
 B2,dementsprechend,adverb,—,ডেমএন্টশপ্রেখেন্ট,সেই অনুযায়ী,Die Nachfrage ist gestiegen; dementsprechend erhöhen wir die Produktion.,চাহিদা বেড়েছে; সেই অনুযায়ী আমরা উৎপাদন বাড়াচ্ছি।,adverb
-B2,wenngleich,conjunction,—,ভেনগ্লাইখ,যদিও,Das Ziel ist erreichbar, wenngleich es schwierig ist.,লক্ষ্যটি অর্জনযোগ্য, যদিও এটি কঠিন।,conjunction
+B2,wenngleich,conjunction,—,ভেনগ্লাইখ,যদিও,"Das Ziel ist erreichbar, wenngleich es schwierig ist.","লক্ষ্যটি অর্জনযোগ্য, যদিও এটি কঠিন।",conjunction
