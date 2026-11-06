@@ -29,13 +29,15 @@ jobs:
           if "com.google.gms.google-services" not in text:
               text = text.replace(
                   "plugins {",
-                  'plugins {\n    id("com.google.gms.google-services") version "4.4.4" apply false',
+                  'plugins {\n    id("com.google.gms.google-services") version "4.5.0" apply false',
                   1,
               )
               settings.write_text(text)
 
           app_gradle = Path("android/app/build.gradle.kts")
           text = app_gradle.read_text()
+          text = re.sub(r'applicationId = "[^"]+"', 'applicationId = "com.deutschbangla"', text, count=1)
+          text = re.sub(r'namespace = "[^"]+"', 'namespace = "com.deutschbangla"', text, count=1)
           if "com.google.gms.google-services" not in text:
               text = text.replace(
                   "plugins {",
