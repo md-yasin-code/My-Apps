@@ -110,5 +110,22 @@ class AppDatabase {
     await db.execute('''CREATE TABLE IF NOT EXISTS daily_activity (activity_date TEXT PRIMARY KEY, minutes INTEGER NOT NULL DEFAULT 0, words_reviewed INTEGER NOT NULL DEFAULT 0, quiz_correct INTEGER NOT NULL DEFAULT 0, quiz_total INTEGER NOT NULL DEFAULT 0)''');
     await db.execute('''CREATE TABLE IF NOT EXISTS app_settings (setting_key TEXT PRIMARY KEY, setting_value TEXT NOT NULL)''');
   }
+  Future<Map<String, Object?>> exportUserData() async {
+    final db = await database;
+    final progress = await db.query('learning_progress');
+    final activity = await db.query('daily_activity');
+    final settings = await db.query('app_settings');
+    final wordFavorites = await db.query('vocabulary', columns: ['id', 'level', 'german'], where: 'is_favorite = 1');
+    final lessonFavorites = await db.query('lessons', columns: ['id', 'level', 'title'], where: 'is_favorite = 1');
+    return {
+      'progress': progress,
+      'dailyActivity': activity,
+      'settings': settings,
+      'wordFavorites': wordFavorites,
+      'lessonFavorites': lessonFavorites,
+      'formatVersion': 1,
+    };
+  }
+
   Future<void> close() async { await _database?.close(); _database = null; }
 }
