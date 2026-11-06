@@ -52,10 +52,19 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         await AuthService.instance.signIn(_email.text, _password.text);
       }
-      await widget.syncService.syncNow();
-      if (mounted) Navigator.pop(context, true);
     } catch (error) {
       if (mounted) setState(() => _message = _friendlyError(error));
+      return;
+    }
+    var synced = true;
+    try {
+      await widget.syncService.syncNow();
+    } catch (_) {
+      synced = false;
+    }
+    if (mounted) Navigator.pop(context, synced);
+    if (mounted) setState(() => _busy = false);
+    return;
     } finally {
       if (mounted) setState(() => _busy = false);
     }
