@@ -4,7 +4,8 @@ import '../main.dart';
 import '../presentation/controllers/app_controller.dart';
 
 class ProgressScreen extends StatefulWidget {
-  const ProgressScreen({super.key});
+  const ProgressScreen({super.key, this.showAppBar = true});
+  final bool showAppBar;
   @override State<ProgressScreen> createState() => _ProgressScreenState();
 }
 class _ProgressScreenState extends State<ProgressScreen> {
@@ -12,7 +13,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   @override void initState() { super.initState(); summary = _load(); }
   Future<Map<String, Object?>> _load() => context.read<LearningRepositoryProvider>().repository.getProgressSummary();
   @override Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('আমার অগ্রগতি')),
+    appBar: widget.showAppBar ? AppBar(title: const Text('আমার অগ্রগতি')) : null,
     body: FutureBuilder<Map<String, Object?>>(
       future: summary,
       builder: (context, snapshot) {
