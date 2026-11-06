@@ -53,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
         await AuthService.instance.signIn(_email.text, _password.text);
       }
     } catch (error) {
-      if (mounted) setState(() => _message = _friendlyError(error));
+      if (mounted) setState(() { _message = _friendlyError(error); _busy = false; });
       return;
     }
     var synced = true;
@@ -63,11 +63,6 @@ class _AuthScreenState extends State<AuthScreen> {
       synced = false;
     }
     if (mounted) Navigator.pop(context, synced);
-    if (mounted) setState(() => _busy = false);
-    return;
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
   }
 
   Future<void> _resetPassword() async {
