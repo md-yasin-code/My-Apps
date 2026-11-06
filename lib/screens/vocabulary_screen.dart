@@ -6,7 +6,8 @@ import '../services/speech_service.dart';
 import '../widgets/glass_surface.dart';
 
 class VocabularyScreen extends StatefulWidget {
-  const VocabularyScreen({super.key});
+  const VocabularyScreen({super.key, this.showAppBar = true});
+  final bool showAppBar;
   @override State<VocabularyScreen> createState() => _VocabularyScreenState();
 }
 class _VocabularyScreenState extends State<VocabularyScreen> {
@@ -16,7 +17,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Future<List<VocabularyWord>> _load() => context.read<LearningRepositoryProvider>().repository.getWords(level: level, query: query, wordType: wordType);
   void _refresh() => setState(() => words = _load());
   @override Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('শব্দভান্ডার')),
+    appBar: widget.showAppBar ? AppBar(title: const Text('শব্দভান্ডার')) : null,
     body: Column(children: [
       Padding(padding: const EdgeInsets.fromLTRB(16, 8, 16, 6), child: TextField(
         decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'জার্মান বা বাংলা শব্দ খুঁজুন', filled: true, border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(14)), borderSide: BorderSide.none)),
