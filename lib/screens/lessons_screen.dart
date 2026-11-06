@@ -4,7 +4,8 @@ import '../main.dart';
 import '../models/lesson.dart';
 
 class LessonsScreen extends StatefulWidget {
-  const LessonsScreen({super.key});
+  const LessonsScreen({super.key, this.showAppBar = true});
+  final bool showAppBar;
   @override
   State<LessonsScreen> createState() => _LessonsScreenState();
 }
@@ -19,7 +20,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('গ্রামার ও লেসন')),
+    appBar: widget.showAppBar ? AppBar(title: const Text('গ্রামার ও লেসন')) : null,
     body: Column(children: [
       Padding(padding: const EdgeInsets.all(12), child: Wrap(spacing: 8, children: ['All','A1','A2','B1','B2'].map((v) => ChoiceChip(label: Text(v == 'All' ? 'সব' : v), selected: level == v, onSelected: (_) => _filter(v))).toList())),
       Expanded(child: FutureBuilder<List<Lesson>>(future: lessons, builder: (context, snapshot) {
