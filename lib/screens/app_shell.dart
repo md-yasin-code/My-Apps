@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'dart:ui';
 import '../widgets/glass_surface.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../data/app_database.dart';
@@ -32,10 +32,10 @@ class _AppShellState extends State<AppShell> {
 
   static const _titles = ['হোম', 'শব্দভান্ডার', 'লেসন', 'অগ্রগতি'];
   late final List<Widget> _tabs = const [
-    HomeScreen(),
-    VocabularyScreen(),
-    LessonsScreen(),
-    ProgressScreen(),
+    HomeScreen(showAppBar: false),
+    VocabularyScreen(showAppBar: false),
+    LessonsScreen(showAppBar: false),
+    ProgressScreen(showAppBar: false),
   ];
 
   User? get _currentUser {
@@ -82,6 +82,10 @@ class _AppShellState extends State<AppShell> {
     final user = _currentUser;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: ClipRect(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18), child: Container(color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.78)))),
         title: Text(_titles[_index], style: const TextStyle(fontWeight: FontWeight.w800)),
         actions: [
           if (user != null)
