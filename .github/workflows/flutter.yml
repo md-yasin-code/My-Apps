@@ -24,6 +24,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
           settings = Path("android/settings.gradle.kts")
           text = settings.read_text()
           if "com.google.gms.google-services" not in text:
