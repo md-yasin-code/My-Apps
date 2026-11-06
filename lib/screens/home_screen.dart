@@ -9,7 +9,8 @@ import 'favorites_screen.dart';
 import '../widgets/glass_surface.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.showAppBar = true});
+  final bool showAppBar;
   @override Widget build(BuildContext context) {
     final tiles = [
       _HomeTile(Icons.menu_book_rounded, 'শব্দভান্ডার', 'অর্থ, উচ্চারণ, উদাহরণ ও পছন্দের শব্দ', const VocabularyScreen()),
