@@ -49,10 +49,15 @@ class _AppShellState extends State<AppShell> {
       return;
     }
     try {
-      await Navigator.push(context, MaterialPageRoute(
+      final synced = await Navigator.push<bool>(context, MaterialPageRoute(
         builder: (_) => AuthScreen(syncService: _sync),
       ));
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {});
+        if (synced == false) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('লগইন সফল হয়েছে। ক্লাউড ব্যাকআপ হয়নি—ইন্টারনেট/Firestore সেটিংস পরীক্ষা করে আবার সিঙ্ক করুন।')));
+        }
+      }
     } on FirebaseException catch (_) {
       if (mounted) ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Firebase কনফিগারেশন সম্পূর্ণ হয়নি। সেটআপ নির্দেশনা দেখুন।')),
