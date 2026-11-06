@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       _HomeTile(Icons.favorite, 'পছন্দের তালিকা', 'সংরক্ষিত শব্দ ও লেসন', const FavoritesScreen()),
       _HomeTile(Icons.settings_rounded, 'সেটিংস', 'থিম, দৈনিক লক্ষ্য ও ডেটা ব্যবস্থাপনা', const SettingsScreen()),
     ];
-    return Scaffold(appBar: AppBar(title: const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800))), body: ListView(padding: const EdgeInsets.all(20), children: [
+    return Scaffold(appBar: showAppBar ? AppBar(title: const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800))) : null, body: ListView(padding: const EdgeInsets.all(20), children: [
       GlassSurface(radius: 26, padding: const EdgeInsets.all(22), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [Icon(Icons.auto_awesome_rounded, color: Theme.of(context).colorScheme.primary), const SizedBox(width: 8), Text('DEUTSCH • বাংলা', style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.primary))]),
         const SizedBox(height: 14), Text('জার্মান শেখা, বাংলায়', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
