@@ -6,7 +6,6 @@ import 'app.dart';
 import 'data/app_database.dart';
 import 'repositories/learning_repository.dart';
 import 'presentation/controllers/app_controller.dart';
-import 'screens/app_shell.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
