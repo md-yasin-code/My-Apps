@@ -7,6 +7,7 @@ class AboutScreen extends StatelessWidget {
   static const _aboutUrl = 'https://doetsch-bangla/about.web.app';
   static const _privacyUrl = 'https://doetsch-bangla/privacy-pilicy.web.app';
   static const _developerUrl = 'https://nextit-bd.web.app';
+  static const _termsUrl = 'https://deutsch-bangla/terms_conditions.web.app';
 
   Future<void> _open(BuildContext context, String url) async {
     final uri = Uri.parse(url);
@@ -62,6 +63,12 @@ class AboutScreen extends StatelessWidget {
               onTap: () => _open(context, _privacyUrl),
             ),
             ListTile(
+              leading: const Icon(Icons.gavel_outlined),
+              title: const Text('Terms & Conditions'),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _open(context, _termsUrl),
+            ),
+            ListTile(
               leading: const Icon(Icons.code_rounded),
               title: const Text('NEXTIT-BD'),
               trailing: const Icon(Icons.open_in_new),
@@ -78,11 +85,6 @@ class AboutScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          'Terms & Conditions-এর সঠিক প্রকাশিত URL এখনো সরবরাহ করা হয়নি।',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey, fontSize: 12),
-        ),
       ],
     ),
   );
