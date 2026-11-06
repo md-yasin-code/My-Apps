@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'dart:ui';
+import '../widgets/glass_surface.dart';
 import 'package:flutter/material.dart';
 
 import '../data/app_database.dart';
@@ -35,7 +38,16 @@ class _AppShellState extends State<AppShell> {
     ProgressScreen(),
   ];
 
+  User? get _currentUser {
+    if (Firebase.apps.isEmpty) return null;
+    try { return FirebaseAuth.instance.currentUser; } catch (_) { return null; }
+  }
+
   Future<void> _openAuth() async {
+    if (Firebase.apps.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Firebase Android সেটআপ এখনো সম্পূর্ণ হয়নি। Guest mode-এ অফলাইনে শিখতে পারবেন।')));
+      return;
+    }
     try {
       await Navigator.push(context, MaterialPageRoute(
         builder: (_) => AuthScreen(syncService: _sync),
@@ -67,7 +79,7 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instanceOrNull?.currentUser;
+    final user = _currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text(_titles[_index], style: const TextStyle(fontWeight: FontWeight.w800)),
@@ -99,7 +111,13 @@ class _AppShellState extends State<AppShell> {
         ),
         child: KeyedSubtree(key: ValueKey(_index), child: _tabs[_index]),
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+        child: GlassSurface(blur: 22, padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3), radius: 28,
+          child: NavigationBar(
+        height: 66,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         selectedIndex: _index,
         onDestinationSelected: (value) => setState(() => _index = value),
         destinations: const [
@@ -108,6 +126,7 @@ class _AppShellState extends State<AppShell> {
           NavigationDestination(icon: Icon(Icons.menu_book_outlined), label: 'লেসন'),
           NavigationDestination(icon: Icon(Icons.insights_outlined), label: 'অগ্রগতি'),
         ],
+      )),
       ),
     );
   }
@@ -122,6 +141,8 @@ class _AppShellState extends State<AppShell> {
           const SizedBox(height: 12),
           const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
           const Text('জার্মান শিখুন, বাংলায়'),
+          const SizedBox(height: 3),
+          const Text('A1 • A2 • B1 • B2', style: TextStyle(fontSize: 12)),
           const SizedBox(height: 8),
           Text(user?.email ?? 'Guest mode • অফলাইন শেখা'),
         ]),
