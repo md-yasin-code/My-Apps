@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'presentation/controllers/app_controller.dart';
-import 'screens/home_screen.dart';
+import 'screens/app_shell.dart';
+import 'data/app_database.dart';
 import 'screens/onboarding_screen.dart';
 
 class DeutschBanglaApp extends StatelessWidget {
-  const DeutschBanglaApp({super.key});
+  const DeutschBanglaApp({super.key, required this.database});
+  final AppDatabase database;
   @override Widget build(BuildContext context) => Consumer<AppController>(
     builder: (context, controller, _) {
       const seed = Color(0xFF176B5B);
@@ -25,7 +27,7 @@ class DeutschBanglaApp extends StatelessWidget {
       );
       return MaterialApp(title: 'Deutsch Bangla', debugShowCheckedModeBanner: false,
         theme: makeTheme(Brightness.light), darkTheme: makeTheme(Brightness.dark),
-        themeMode: controller.themeMode, home: controller.onboardingComplete ? const HomeScreen() : const OnboardingScreen());
+        themeMode: controller.themeMode, home: controller.onboardingComplete ? AppShell(database: database) : const OnboardingScreen());
     },
   );
 }
