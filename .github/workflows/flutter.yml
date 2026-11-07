@@ -46,7 +46,7 @@ jobs:
                   'plugins {\n    id("com.google.gms.google-services")',
                   1,
               )
-              app_gradle.write_text(text)
+          app_gradle.write_text(text)
 
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           if manifest.exists():
