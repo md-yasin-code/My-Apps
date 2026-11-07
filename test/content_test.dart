@@ -12,13 +12,13 @@ void main() {
     expect(words.length, 100);
     expect(additionalVocabularySeed.length, 40);
     final allWords = <String>[...vocabularySeed.map((row) => (row['german'] as String).replaceFirst(RegExp(r'^(der|die|das) '), '')), ...words.map((row) => row['german'] as String), ...additionalVocabularySeed.map((row) => row['german'] as String), ...spreadsheetVocabularySeed.map((row) => row['german'] as String)];
-    expect(spreadsheetVocabularySeed.length, 43);
-    expect(allWords.length, 209);
+    expect(spreadsheetVocabularySeed.length, 48);
+    expect(allWords.length, 214);
     expect(allWords.toSet().length, 209);
     expect(words.map((word) => word['level']).toSet(), containsAll(['A1', 'A2', 'B1', 'B2']));
     expect(extendedLessonSeed.length, 26);
     expect(buildVocabularyQuizSeed().length, 140);
     expect(buildAdditionalVocabularyQuizSeed().length, 40);
-    expect(buildSpreadsheetVocabularyQuizSeed().length, 43);
+    expect(buildSpreadsheetVocabularyQuizSeed().length, 48);
   });
 }
