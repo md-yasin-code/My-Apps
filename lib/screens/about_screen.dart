@@ -4,10 +4,10 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
-  static const _aboutUrl = 'https://doetsch-bangla/about.web.app';
-  static const _privacyUrl = 'https://doetsch-bangla/privacy-pilicy.web.app';
-  static const _developerUrl = 'https://nextit-bd.web.app';
-  static const _termsUrl = 'https://deutsch-bangla/terms_conditions.web.app';
+  static const _aboutUrl = 'https://deutsch-bangla.web.app';
+  static const _privacyUrl = 'https://deutsch-bangla.web.app/privacy-policy';
+  static const _developerUrl = 'https://mohammadyasin-bd.web.app';
+  static const _termsUrl = 'https://deutsch-bangla.web.app/terms_conditions';
 
   Future<void> _open(BuildContext context, String url) async {
     final uri = Uri.parse(url);
@@ -44,7 +44,7 @@ class AboutScreen extends StatelessWidget {
             Divider(height: 1),
             ListTile(title: Text('শেখার স্তর'), subtitle: Text('CEFR A1 – B2')),
             Divider(height: 1),
-            ListTile(title: Text('ডেভেলপার'), subtitle: Text('NEXTIT-BD')),
+            ListTile(title: Text('ডেভেলপার'), subtitle: Text('Mohammad Yasin')),
           ]),
         ),
         const SizedBox(height: 12),
@@ -70,7 +70,7 @@ class AboutScreen extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.code_rounded),
-              title: const Text('NEXTIT-BD'),
+              title: const Text('ডেভেলপারের ব্যক্তিগত ওয়েবসাইট'),
               trailing: const Icon(Icons.open_in_new),
               onTap: () => _open(context, _developerUrl),
             ),
