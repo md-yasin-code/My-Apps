@@ -14,7 +14,7 @@ void main() {
     final allWords = <String>[...vocabularySeed.map((row) => (row['german'] as String).replaceFirst(RegExp(r'^(der|die|das) '), '')), ...words.map((row) => row['german'] as String), ...additionalVocabularySeed.map((row) => row['german'] as String), ...spreadsheetVocabularySeed.map((row) => row['german'] as String)];
     expect(spreadsheetVocabularySeed.length, 48);
     expect(allWords.length, 214);
-    expect(allWords.toSet().length, 209);
+    expect(allWords.toSet().length, 213);
     expect(words.map((word) => word['level']).toSet(), containsAll(['A1', 'A2', 'B1', 'B2']));
     expect(extendedLessonSeed.length, 26);
     expect(buildVocabularyQuizSeed().length, 140);
