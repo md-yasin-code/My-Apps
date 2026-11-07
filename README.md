@@ -22,7 +22,7 @@ Offline-first Flutter app for Bengali speakers learning German (A1–B2).
 - Excel-compatible vocabulary master sheet with duplicate validation and CSV-to-Dart generation.
 
 ## Content size and quality note
-The current vocabulary seed contains 209 distinct entries (43 managed through the spreadsheet master), still below the requested 400–600. The lesson and quiz targets are met by count, but the generated vocabulary quiz distractors and all Bengali/German content still need instructor review. This is a learning prototype, not a complete or certified CEFR course.
+The current vocabulary seed contains the existing bundled entries plus the unique spreadsheet-managed entries, still below the requested 400–600. The lesson and quiz targets are met by count, but the generated vocabulary quiz distractors and all Bengali/German content still need instructor review. This is a learning prototype, not a complete or certified CEFR course.
 
 ## Tech stack
 - Flutter / Dart (SDK >=3.3.0 <4.0.0)
@@ -98,7 +98,7 @@ The generator checks required columns, CEFR levels and duplicate German headword
 - Daily goal currently counts reviewed words; lesson/quiz-only sessions do not complete the word goal.
 - The review scheduler is intentionally simple, not a full SM-2 implementation.
 - Quiz currently uses multiple-choice questions only; fill-in-the-blank and true/false modes remain to be added.
-- A branded launcher icon and native splash screen are still pending.
+- Branded Android launcher icon generated from `assets/logo.png` during CI; native splash screen branding remains a separate task.
 - Firebase Android sign-in/cloud backup requires the real Android app ID, enabled Email/Password provider, and published Firestore rules described above.
 - Terms & Conditions URL was not supplied; About currently links the supplied About, Privacy Policy and NEXTIT-BD URLs.
 - Verify all seed translations and German grammar with an instructor.
