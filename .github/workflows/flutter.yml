@@ -25,6 +25,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
+
           settings = Path("android/settings.gradle.kts")
           text = settings.read_text()
           if "com.google.gms.google-services" not in text:
@@ -46,16 +47,26 @@ jobs:
                   1,
               )
               app_gradle.write_text(text)
-          PY
-          mkdir -p android/app
-          cp config/firebase/google-services.json android/app/google-services.json
+
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           if manifest.exists():
               xml = manifest.read_text()
-              xml, count = re.subn(r'android:label="[^"]*"', 'android:label="Deutsch Bangla"', xml, count=1)
+              xml, count = re.subn(
+                  r'android:label="[^"]*"',
+                  'android:label="Deutsch Bangla"',
+                  xml,
+                  count=1,
+              )
               if count == 0:
-                  xml = xml.replace("<application", '<application android:label="Deutsch Bangla"', 1)
+                  xml = xml.replace(
+                      "<application",
+                      '<application android:label="Deutsch Bangla"',
+                      1,
+                  )
               manifest.write_text(xml)
+          PY
+          mkdir -p android/app
+          cp config/firebase/google-services.json android/app/google-services.json
       - name: Install dependencies
         run: flutter pub get
       - name: Generate Android launcher icon from assets/logo.png
