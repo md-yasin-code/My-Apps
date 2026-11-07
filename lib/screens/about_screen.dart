@@ -26,8 +26,7 @@ class AboutScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       children: [
         const SizedBox(height: 12),
-        Icon(Icons.auto_stories_rounded,
-            size: 64, color: Theme.of(context).colorScheme.primary),
+        ClipRRect(borderRadius: BorderRadius.circular(22), child: Image.asset('assets/logo.png', width: 88, height: 88, fit: BoxFit.cover)),
         const SizedBox(height: 14),
         Text('Deutsch Bangla',
             textAlign: TextAlign.center,
