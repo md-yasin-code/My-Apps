@@ -146,7 +146,7 @@ class _AppShellState extends State<AppShell> {
       Padding(
         padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircleAvatar(radius: 25, child: Icon(Icons.auto_stories_rounded, color: Theme.of(context).colorScheme.onPrimaryContainer)),
+          ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.asset('assets/logo.png', width: 54, height: 54, fit: BoxFit.cover)),
           const SizedBox(height: 12),
           const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
           const Text('জার্মান শিখুন, বাংলায়'),
