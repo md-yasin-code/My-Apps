@@ -14,6 +14,8 @@ Offline-first Flutter app for Bengali speakers learning German (A1–B2).
 - Settings, progress dashboard and reset-progress action.
 - SQLite schema v6 migrations for existing installations.
 - German pronunciation playback via the device's installed German Text-to-Speech voice (offline after voice data is installed).
+- Spreadsheet-managed vocabulary bank expanded with 24 additional A1–B2 entries; edit `assets/data/vocabulary_master.csv` and run `python3 tool/generate_vocabulary.py` to rebuild the bundled SQLite seed.
+- Startup diagnostics: if local database initialization fails, the app now shows the actual error and a retry action instead of immediately closing.
 - Glassmorphism vocabulary cards, frosted top header and floating bottom navigation with soft page transitions.
 - Optional Firebase Email/Password account sign-in and per-user Firestore learning-data backup; guest learning remains offline-first.
 - Bengali About page with official website, Privacy Policy and NEXTIT-BD links.
