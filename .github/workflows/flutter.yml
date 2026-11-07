@@ -51,6 +51,8 @@ jobs:
           cp config/firebase/google-services.json android/app/google-services.json
       - name: Install dependencies
         run: flutter pub get
+      - name: Generate Android launcher icon from assets/logo.png
+        run: dart run flutter_launcher_icons
       - name: Validate and generate spreadsheet vocabulary
         run: |
           python3 tool/generate_vocabulary.py
