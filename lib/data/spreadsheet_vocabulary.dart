@@ -49,4 +49,4 @@ const spreadsheetVocabularySeed = <Map<String, Object?>>[
   {'level': 'A2', 'german': 'Führerschein', 'article': 'der', 'plural': 'Führerscheine', 'pronunciation': 'ফ্যুরারশাইন', 'meaning_bn': 'ড্রাইভিং লাইসেন্স', 'example_de': 'Ich mache gerade meinen Führerschein.', 'example_bn': 'আমি এখন ড্রাইভিং লাইসেন্স করছি।', 'word_type': 'noun'},
   {'level': 'B1', 'german': 'Bewerbung', 'article': 'die', 'plural': 'Bewerbungen', 'pronunciation': 'বেওয়ারবুং', 'meaning_bn': 'চাকরির আবেদন', 'example_de': 'Ich schreibe eine Bewerbung.', 'example_bn': 'আমি একটি চাকরির আবেদন লিখছি।', 'word_type': 'noun'},
   {'level': 'B2', 'german': 'Nachhaltigkeit', 'article': 'die', 'plural': '—', 'pronunciation': 'নাখহালটিখকাইট', 'meaning_bn': 'টেকসই উন্নয়ন', 'example_de': 'Nachhaltigkeit ist heute sehr wichtig.', 'example_bn': 'টেকসই উন্নয়ন আজ খুব গুরুত্বপূর্ণ।', 'word_type': 'noun'},
-];\n
+];
