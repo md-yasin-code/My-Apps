@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     ];
     return Scaffold(appBar: showAppBar ? AppBar(title: const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800))) : null, body: ListView(padding: const EdgeInsets.all(20), children: [
       GlassSurface(radius: 26, padding: const EdgeInsets.all(22), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [Icon(Icons.auto_awesome_rounded, color: Theme.of(context).colorScheme.primary), const SizedBox(width: 8), Text('DEUTSCH • বাংলা', style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.primary))]),
+        Row(children: [ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset('assets/logo.png', width: 42, height: 42, fit: BoxFit.cover)), const SizedBox(width: 10), Text('DEUTSCH • বাংলা', style: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.primary))]),
         const SizedBox(height: 14), Text('জার্মান শেখা, বাংলায়', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
         const SizedBox(height: 7), Text('A1 থেকে B2  •  সম্পূর্ণ অফলাইন', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700)),
         const SizedBox(height: 14), Text('প্রতিদিন অল্প অল্প শিখুন। শব্দ মনে রাখুন, ব্যাকরণ বুঝুন এবং আত্মবিশ্বাসের সঙ্গে অনুশীলন করুন।', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.55)),
