@@ -69,7 +69,7 @@ jobs:
               if plugin_id not in app_text:
                   app_text = app_text.replace(
                       "plugins {",
-                      f'plugins {{\\n    id("{plugin_id}")',
+                      f'plugins {{\n    id("{plugin_id}")',
                       1,
                   )
           app_text = re.sub(r'applicationId = "[^"]+"', 'applicationId = "com.deutschbangla"', app_text, count=1)
