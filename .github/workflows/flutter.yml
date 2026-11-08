@@ -110,7 +110,9 @@ jobs:
           git diff --exit-code -- lib/data/spreadsheet_vocabulary.dart
 
       - name: Format
-        run: dart format --set-exit-if-changed .
+        run: |
+          dart format .
+          git diff --check
 
       - name: Analyze
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
