@@ -15,114 +15,50 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-
-      - name: Generate Android wrapper if missing
-        run: |
-          if [ ! -d android ]; then
-            flutter create . --platforms=android --org com.mohammadyasin
-          fi
-
-      - name: Configure Firebase plugins for Android
+          cache: true
+      - name: Verify committed Android project and Firebase identity
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          import json
-          import re
-
-          config_path = Path("config/firebase/google-services.json")
-          config = json.loads(config_path.read_text())
-          project_id = config["project_info"]["project_id"]
-          clients = config.get("client", [])
-          matching = [
-              item for item in clients
-              if item.get("client_info", {}).get("android_client_info", {}).get("package_name")
-              == "com.deutschbangla"
-          ]
-          if project_id != "deutsch-bangla" or not matching:
-              raise SystemExit("Firebase config does not match existing deutsch-bangla / com.deutschbangla app")
-
-          settings = Path("android/settings.gradle.kts")
-          settings_text = settings.read_text()
-          if "com.google.firebase.crashlytics" not in settings_text:
-              if "plugins {" not in settings_text:
-                  raise SystemExit("Could not find plugins block in android/settings.gradle.kts")
-              settings_text = settings_text.replace(
-                  "plugins {",
-                  'plugins {\n    id("com.google.firebase.crashlytics") version "3.0.8" apply false',
-                  1,
-              )
-          if "com.google.gms.google-services" not in settings_text:
-              settings_text = settings_text.replace(
-                  "plugins {",
-                  'plugins {\n    id("com.google.gms.google-services") version "4.5.0" apply false',
-                  1,
-              )
-          settings.write_text(settings_text)
-
-          app_gradle = Path("android/app/build.gradle.kts")
-          app_text = app_gradle.read_text()
-          if "id(" not in app_text or "plugins {" not in app_text:
-              raise SystemExit("Unexpected Android app Gradle format; expected Kotlin plugins block")
-          for plugin_id in ("com.google.gms.google-services", "com.google.firebase.crashlytics"):
-              if plugin_id not in app_text:
-                  app_text = app_text.replace(
-                      "plugins {",
-                      f'plugins {{\n    id("{plugin_id}")',
-                      1,
-                  )
-          app_text = re.sub(r'applicationId = "[^"]+"', 'applicationId = "com.deutschbangla"', app_text, count=1)
-          app_text = re.sub(r'namespace = "[^"]+"', 'namespace = "com.deutschbangla"', app_text, count=1)
-          if 'applicationId = "com.deutschbangla"' not in app_text:
-              raise SystemExit("Could not enforce Android applicationId")
-          app_gradle.write_text(app_text)
-
-          manifest = Path("android/app/src/main/AndroidManifest.xml")
-          if manifest.exists():
-              xml = manifest.read_text()
-              xml, count = re.subn(r'android:label="[^"]*"', 'android:label="Deutsch Bangla"', xml, count=1)
-              if count == 0:
-                  xml = xml.replace("<application", '<application android:label="Deutsch Bangla"', 1)
-              manifest.write_text(xml)
-
-          Path("android/app").mkdir(parents=True, exist_ok=True)
-          Path("android/app/google-services.json").write_text(config_path.read_text())
-          PY
-
-      - name: Verify Crashlytics Android configuration
-        run: |
-          grep -q 'com.google.firebase.crashlytics' android/settings.gradle.kts
-          grep -q 'com.google.firebase.crashlytics' android/app/build.gradle.kts
-          grep -q 'com.google.gms.google-services' android/app/build.gradle.kts
+          test -f android/settings.gradle.kts
+          test -f android/build.gradle.kts
+          test -f android/app/build.gradle.kts
+          test -f android/gradle/wrapper/gradle-wrapper.jar
+          test -x android/gradlew
+          test -f android/app/src/main/kotlin/com/deutschbangla/MainActivity.kt
+          cmp -s config/firebase/google-services.json android/app/google-services.json
+          grep -q 'namespace = "com.deutschbangla"' android/app/build.gradle.kts
           grep -q 'applicationId = "com.deutschbangla"' android/app/build.gradle.kts
-          test -s android/app/google-services.json
-
-      - name: Install dependencies
+          grep -q 'com.google.gms.google-services' android/settings.gradle.kts
+          grep -q 'com.google.firebase.crashlytics' android/settings.gradle.kts
+          grep -q 'com.google.gms.google-services' android/app/build.gradle.kts
+          grep -q 'com.google.firebase.crashlytics' android/app/build.gradle.kts
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          cfg=json.loads(Path("android/app/google-services.json").read_text())
+          assert cfg["project_info"]["project_id"]=="deutsch-bangla"
+          assert any(c.get("client_info",{}).get("android_client_info",{}).get("package_name")=="com.deutschbangla" for c in cfg.get("client",[]))
+          print("Existing Firebase project and Android app verified.")
+          PY
+      - name: Install Flutter dependencies
         run: flutter pub get
-
-      - name: Generate Android launcher icon from assets/logo.png
+      - name: Generate launcher icons from assets/logo.png
         run: dart run flutter_launcher_icons
-
-      - name: Validate and generate spreadsheet vocabulary
+      - name: Validate spreadsheet vocabulary source
         run: |
           python3 tool/generate_vocabulary.py
           git diff --exit-code -- lib/data/spreadsheet_vocabulary.dart
-
-      - name: Format
+      - name: Verify Dart formatting
         run: |
           dart format .
           git diff --check
-
       - name: Analyze
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
-
       - name: Tests
         run: flutter test
-
       - name: Build release APK
         run: flutter build apk --release
-
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:

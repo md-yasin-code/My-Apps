@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "494035129938",
+    "project_id": "deutsch-bangla",
+    "storage_bucket": "deutsch-bangla.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494035129938:android:8d99f657a320aabcb4718b",
+        "android_client_info": { "package_name": "com.deutschbangla" }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494035129938-78plfpod1ii6geh7raknqg47b8ehn10k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{ "current_key": "AIzaSyDOWlnE1mtRXiIexFqJV7eyDnkGdcRf-E0" }],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            { "client_id": "494035129938-78plfpod1ii6geh7raknqg47b8ehn10k.apps.googleusercontent.com", "client_type": 3 }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
