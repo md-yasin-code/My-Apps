@@ -5,13 +5,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../data/app_database.dart';
-import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
 import 'about_screen.dart';
-import 'auth_screen.dart';
+import 'alphabet_screen.dart';
 import 'favorites_screen.dart';
 import 'home_screen.dart';
 import 'lessons_screen.dart';
+import 'profile_screen.dart';
 import 'progress_screen.dart';
 import 'quiz_screen.dart';
 import 'review_screen.dart';
@@ -40,46 +40,21 @@ class _AppShellState extends State<AppShell> {
 
   User? get _currentUser {
     if (Firebase.apps.isEmpty) return null;
-    try { return FirebaseAuth.instance.currentUser; } catch (_) { return null; }
-  }
-
-  Future<void> _openAuth() async {
-    if (Firebase.apps.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Firebase Android সেটআপ এখনো সম্পূর্ণ হয়নি। Guest mode-এ অফলাইনে শিখতে পারবেন।')));
-      return;
-    }
     try {
-      final synced = await Navigator.push<bool>(context, MaterialPageRoute(
-        builder: (_) => AuthScreen(syncService: _sync),
-      ));
-      if (mounted) {
-        setState(() {});
-        if (synced == false) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('লগইন সফল হয়েছে। ক্লাউড ব্যাকআপ হয়নি—ইন্টারনেট/Firestore সেটিংস পরীক্ষা করে আবার সিঙ্ক করুন।')));
-        }
-      }
-    } on FirebaseException catch (_) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Firebase কনফিগারেশন সম্পূর্ণ হয়নি। সেটআপ নির্দেশনা দেখুন।')),
-      );
+      return FirebaseAuth.instance.currentUser;
     } catch (_) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Firebase এখনো প্রস্তুত নয়।')),
-      );
+      return null;
     }
   }
 
-  Future<void> _syncNow() async {
-    try {
-      await _sync.syncNow();
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('আপনার শেখার অগ্রগতি ক্লাউডে সেভ হয়েছে।')),
-      );
-    } catch (_) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('সিঙ্ক করা যায়নি। লগইন ও ইন্টারনেট সংযোগ পরীক্ষা করুন।')),
-      );
-    }
+  Future<void> _openProfile() async {
+    await Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ProfileScreen(syncService: _sync),
+      ),
+    );
+    if (mounted) setState(() {});
   }
 
   @override
@@ -90,17 +65,25 @@ class _AppShellState extends State<AppShell> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        flexibleSpace: ClipRect(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18), child: Container(color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.78)))),
-        title: Text(_titles[_index], style: const TextStyle(fontWeight: FontWeight.w800)),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+            child: Container(
+              color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.78),
+            ),
+          ),
+        ),
+        title: Text(_titles[_index],
+            style: const TextStyle(fontWeight: FontWeight.w800)),
         actions: [
-          if (user != null)
-            IconButton(tooltip: 'ক্লাউডে সিঙ্ক করুন', onPressed: _syncNow, icon: const Icon(Icons.cloud_upload_outlined)),
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
-              tooltip: user?.email ?? 'অ্যাকাউন্ট',
-              onPressed: _openAuth,
-              icon: Icon(user == null ? Icons.account_circle_outlined : Icons.account_circle),
+              tooltip: user?.email ?? 'প্রোফাইল ও অ্যাকাউন্ট',
+              onPressed: _openProfile,
+              icon: Icon(user == null
+                  ? Icons.account_circle_outlined
+                  : Icons.account_circle),
             ),
           ),
         ],
@@ -114,7 +97,10 @@ class _AppShellState extends State<AppShell> {
         transitionBuilder: (child, animation) => FadeTransition(
           opacity: animation,
           child: SlideTransition(
-            position: Tween<Offset>(begin: const Offset(0.025, 0), end: Offset.zero).animate(animation),
+            position: Tween<Offset>(
+              begin: const Offset(0.025, 0),
+              end: Offset.zero,
+            ).animate(animation),
             child: child,
           ),
         ),
@@ -122,62 +108,118 @@ class _AppShellState extends State<AppShell> {
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-        child: GlassSurface(blur: 22, padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3), radius: 28,
+        child: GlassSurface(
+          blur: 22,
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+          radius: 28,
           child: NavigationBar(
-        height: 66,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        selectedIndex: _index,
-        onDestinationSelected: (value) => setState(() => _index = value),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'হোম'),
-          NavigationDestination(icon: Icon(Icons.translate_rounded), label: 'শব্দ'),
-          NavigationDestination(icon: Icon(Icons.menu_book_outlined), label: 'লেসন'),
-          NavigationDestination(icon: Icon(Icons.insights_outlined), label: 'অগ্রগতি'),
-        ],
-      )),
+            height: 66,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            selectedIndex: _index,
+            onDestinationSelected: (value) => setState(() => _index = value),
+            destinations: const [
+              NavigationDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home_rounded),
+                  label: 'হোম'),
+              NavigationDestination(
+                  icon: Icon(Icons.translate_rounded), label: 'শব্দ'),
+              NavigationDestination(
+                  icon: Icon(Icons.menu_book_outlined), label: 'লেসন'),
+              NavigationDestination(
+                  icon: Icon(Icons.insights_outlined), label: 'অগ্রগতি'),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildDrawer(User? user) => NavigationDrawer(
-    selectedIndex: null,
-    children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.asset('assets/logo.png', width: 54, height: 54, fit: BoxFit.cover)),
-          const SizedBox(height: 12),
-          const Text('Deutsch Bangla', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
-          const Text('জার্মান শিখুন, বাংলায়'),
-          const SizedBox(height: 3),
-          const Text('A1 • A2 • B1 • B2', style: TextStyle(fontSize: 12)),
-          const SizedBox(height: 8),
-          Text(user?.email ?? 'Guest mode • অফলাইন শেখা'),
-        ]),
-      ),
-      const Divider(),
-      NavigationDrawerDestination(icon: const Icon(Icons.quiz_outlined), label: const Text('কুইজ ও অনুশীলন')),
-      NavigationDrawerDestination(icon: const Icon(Icons.replay_circle_filled_outlined), label: const Text('রিভিউ / পুনরাবৃত্তি')),
-      NavigationDrawerDestination(icon: const Icon(Icons.favorite_border), label: const Text('পছন্দের তালিকা')),
-      const Padding(padding: EdgeInsets.fromLTRB(28, 18, 16, 8), child: Text('অ্যাকাউন্ট ও অ্যাপ')),
-      NavigationDrawerDestination(icon: const Icon(Icons.cloud_sync_outlined), label: const Text('লগইন / ক্লাউড সিঙ্ক')),
-      NavigationDrawerDestination(icon: const Icon(Icons.settings_outlined), label: const Text('সেটিংস')),
-      NavigationDrawerDestination(icon: const Icon(Icons.info_outline), label: const Text('অ্যাপ সম্পর্কে')),
-      if (user != null)
-        NavigationDrawerDestination(icon: const Icon(Icons.logout), label: const Text('লগআউট')),
-    ],
-    onDestinationSelected: (value) {
-      Navigator.pop(context);
-      switch (value) {
-        case 0: Navigator.push(context, MaterialPageRoute(builder: (_) => const QuizScreen())); break;
-        case 1: Navigator.push(context, MaterialPageRoute(builder: (_) => const ReviewScreen())); break;
-        case 2: Navigator.push(context, MaterialPageRoute(builder: (_) => const FavoritesScreen())); break;
-        case 3: _openAuth(); break;
-        case 4: Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen())); break;
-        case 5: Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen())); break;
-        case 6: AuthService.instance.signOut().then((_) { if (mounted) setState(() {}); }); break;
-      }
-    },
-  );
+        selectedIndex: null,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset('assets/logo.png',
+                      width: 54, height: 54, fit: BoxFit.cover),
+                ),
+                const SizedBox(height: 12),
+                const Text('Deutsch Bangla',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
+                const Text('জার্মান শিখুন, বাংলায়'),
+                const SizedBox(height: 3),
+                const Text('A1 • A2 • B1 • B2',
+                    style: TextStyle(fontSize: 12)),
+                const SizedBox(height: 8),
+                Text(user?.email ?? 'Guest mode • অফলাইন শেখা'),
+              ],
+            ),
+          ),
+          const Divider(),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.quiz_outlined),
+              label: const Text('কুইজ ও অনুশীলন')),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.replay_circle_filled_outlined),
+              label: const Text('রিভিউ / পুনরাবৃত্তি')),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.favorite_border),
+              label: const Text('পছন্দের তালিকা')),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.text_fields_rounded),
+              label: const Text('অক্ষর ও উচ্চারণ')),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(28, 18, 16, 8),
+            child: Text('অ্যাকাউন্ট ও অ্যাপ'),
+          ),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.account_circle_outlined),
+              label: const Text('প্রোফাইল / লগইন')),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.settings_outlined),
+              label: const Text('সেটিংস')),
+          NavigationDrawerDestination(
+              icon: const Icon(Icons.info_outline),
+              label: const Text('অ্যাপ সম্পর্কে')),
+        ],
+        onDestinationSelected: (value) {
+          Navigator.pop(context);
+          switch (value) {
+            case 0:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const QuizScreen()));
+              break;
+            case 1:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const ReviewScreen()));
+              break;
+            case 2:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const FavoritesScreen()));
+              break;
+            case 3:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const AlphabetScreen()));
+              break;
+            case 4:
+              _openProfile();
+              break;
+            case 5:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()));
+              break;
+            case 6:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const AboutScreen()));
+              break;
+          }
+        },
+      );
 }

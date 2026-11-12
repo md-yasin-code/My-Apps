@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'alphabet_screen.dart';
 import 'vocabulary_screen.dart';
 import 'lessons_screen.dart';
 import 'quiz_screen.dart';
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   final bool showAppBar;
   @override Widget build(BuildContext context) {
     final tiles = [
+      _HomeTile(Icons.text_fields_rounded, 'অক্ষর ও উচ্চারণ', 'জার্মান বর্ণমালা শিখুন এবং উচ্চারণ শুনুন', const AlphabetScreen()),
       _HomeTile(Icons.menu_book_rounded, 'শব্দভান্ডার', 'অর্থ, উচ্চারণ, উদাহরণ ও পছন্দের শব্দ', const VocabularyScreen()),
       _HomeTile(Icons.school_rounded, 'গ্রামার ও লেসন', 'A1 থেকে B2 পর্যন্ত সহজ বাংলা ব্যাখ্যা', const LessonsScreen()),
       _HomeTile(Icons.quiz_rounded, 'অনুশীলন পরীক্ষা', 'শব্দভান্ডার ও ব্যাকরণ যাচাই করুন', const QuizScreen()),
